@@ -9,6 +9,6 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/liyjjie/microservice-config.git
+          uri: https://github.com/liyjjie/SpringCloud.git
 
 
