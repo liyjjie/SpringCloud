@@ -13,6 +13,7 @@
         <module name="microservice-consumer-feign" />
         <module name="microservice-consumer-feign-hystrix" />
         <module name="microservice-consumer-hystrix-dashbord" />
+        <module name="microservice-demo" />
         <module name="microservice-eureka1" />
         <module name="microservice-eureka2" />
         <module name="microservice-eureka3" />
@@ -20,6 +21,7 @@
         <module name="microservice-provider-hystrix" />
         <module name="microservice-provider2" />
         <module name="microservice-provider3" />
+        <module name="microservice-zull" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

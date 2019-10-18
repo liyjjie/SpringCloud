@@ -20,7 +20,7 @@ public class UserConsumerController {
     //	private static String REST_URL_PREFIX = "http://localhost:8002";
     /*直接根据微服务名调用，而不再是根据地址和端口了，运用了eureka的发现功能*/
     //取决于开发环境和测试环境的地址
-    private static String REST_URL_PREFIX = "http://microservice-provider";
+    private static String REST_URL_PREFIX = "http://microservice-config-dev";
 
     @Autowired
     private RestTemplate restTemplate;

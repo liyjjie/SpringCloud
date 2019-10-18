@@ -5,11 +5,11 @@
     <file url="file://$PROJECT_DIR$/microservice-com" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-config-client" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-config-server" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/microservice-consumer" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-consumer-config-client" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-consumer-feign" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-consumer-feign-hystrix" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-consumer-hystrix-dashbord" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservice-demo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-eureka1" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-eureka2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-eureka3" charset="UTF-8" />
@@ -17,5 +17,6 @@
     <file url="file://$PROJECT_DIR$/microservice-provider-hystrix" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-provider2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservice-provider3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservice-zull" charset="UTF-8" />
   </component>
 </project>

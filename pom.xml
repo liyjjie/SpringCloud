@@ -23,6 +23,8 @@
         <module>microservice-provider3</module>
         <module>microservice-consumer-hystrix-dashbord</module>
         <module>microservice-provider-hystrix</module>
+        <module>microservice-demo</module>
+        <module>microservice-zull</module>
     </modules>
 
 
