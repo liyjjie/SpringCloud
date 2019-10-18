@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="microservice-com" />
+        <module name="microservice-config-client" />
+        <module name="microservice-config-server" />
+        <module name="microservice-consumer-config-client" />
+        <module name="microservice-consumer-feign" />
+        <module name="microservice-consumer-feign-hystrix" />
+        <module name="microservice-consumer-hystrix-dashbord" />
+        <module name="microservice-eureka1" />
+        <module name="microservice-eureka2" />
+        <module name="microservice-eureka3" />
+        <module name="microservice-provider" />
+        <module name="microservice-provider-hystrix" />
+        <module name="microservice-provider2" />
+        <module name="microservice-provider3" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="microservice-consumer" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

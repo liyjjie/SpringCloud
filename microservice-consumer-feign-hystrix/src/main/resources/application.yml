@@ -1,0 +1,12 @@
+server:
+  port: 7003
+
+feign:
+  hystrix:
+    enabled: true
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka9003.com:9003/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9001
