@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class UserConsumerController {
 
-    private static String REST_URL_PREFIX = "http://localhost:8002";
+//    private static String REST_URL_PREFIX = "http://localhost:8002";
     /*直接根据微服务名调用，而不再是根据地址和端口了，运用了eureka的发现功能*/
 //	private static String REST_URL_PREFIX = "http://microservicecloud-provider";
 //	@Autowired
