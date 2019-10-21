@@ -6,7 +6,7 @@ spring:
 spring:
   profiles: dev                   #开发环境
   application:
-    name: microservice-provider
+    name: microservice-provider #修改后 调服务也须修改
 
 ---
 spring:
