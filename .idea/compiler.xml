@@ -13,10 +13,10 @@
         <module name="microservice-consumer-feign" />
         <module name="microservice-consumer-feign-hystrix" />
         <module name="microservice-consumer-hystrix-dashbord" />
-        <module name="microservice-demo" />
         <module name="microservice-eureka1" />
         <module name="microservice-eureka2" />
         <module name="microservice-eureka3" />
+        <module name="microservice-hibernate" />
         <module name="microservice-provider" />
         <module name="microservice-provider-hystrix" />
         <module name="microservice-provider2" />
@@ -25,7 +25,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
       <module name="microservice-consumer" target="1.8" />
+      <module name="microservice-demo" target="1.8" />
+      <module name="microservice-provider3 (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

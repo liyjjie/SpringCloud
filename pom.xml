@@ -15,16 +15,9 @@
         <module>microservice-consumer-config-client</module>
         <module>microservice-consumer-feign-hystrix</module>
         <module>microservice-consumer-feign</module>
-        <module>microservice-eureka1</module>
-        <module>microservice-eureka2</module>
-        <module>microservice-eureka3</module>
-        <module>microservice-provider</module>
-        <module>microservice-provider2</module>
-        <module>microservice-provider3</module>
         <module>microservice-consumer-hystrix-dashbord</module>
         <module>microservice-provider-hystrix</module>
-        <module>microservice-demo</module>
-        <module>microservice-zull</module>
+        <module>microservice-parent</module>
     </modules>
 
 
