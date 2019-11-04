@@ -1,8 +1,11 @@
 package com.jack.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jack.vo.UserReturn;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -12,9 +15,10 @@ import java.util.Set;
  * @date ： 2019-10-21 13:58
  * @modified By：
  */
-@Table(name="t_user")
 @Entity
-public class User {
+@Table(name="t_user")
+//@JsonIgnoreProperties({"address"})
+public class User implements Serializable {
     private int id;
 
     private String name;
@@ -90,5 +94,14 @@ public class User {
                 ", address=" + address +
                 ", version=" + version +
                 '}';
+    }
+
+    public UserReturn toVo(){
+        UserReturn userReturn=new UserReturn();
+        userReturn.setId(this.id);
+        userReturn.setAge(this.age);
+        userReturn.setName(this.name);
+        userReturn.setAddress(this.address);
+        return userReturn;
     }
 }

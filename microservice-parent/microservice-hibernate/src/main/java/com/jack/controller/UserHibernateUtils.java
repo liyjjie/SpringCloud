@@ -3,6 +3,7 @@ package com.jack.controller;
 import com.jack.entity.Address;
 import com.jack.entity.User;
 import com.jack.service.UserService;
+import com.jack.vo.UserReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +22,10 @@ public class UserHibernateUtils {
     private UserService userService;
 
     @GetMapping("getFindById/{id}")
-    public User getFindById(@PathVariable("id") int id) {
+    public UserReturn getFindById(@PathVariable("id") int id) {
         User userHibernate = userService.getFindById(id);
-        return userHibernate;
+        UserReturn userReturn=userHibernate.toVo();
+        return userReturn;
     }
 
     @GetMapping("/getAddress/{id}")

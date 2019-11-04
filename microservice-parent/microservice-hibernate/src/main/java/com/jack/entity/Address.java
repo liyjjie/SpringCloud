@@ -1,6 +1,10 @@
 package com.jack.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author ：liyongjie
@@ -8,9 +12,9 @@ import javax.persistence.*;
  * @date ： 2019-10-31 15:22
  * @modified By：
  */
-@Table(name = "t_address")
 @Entity
-public class Address {
+@Table(name = "t_address")
+public class Address implements Serializable {
 
     private int id;
 
@@ -67,11 +71,12 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    public User getUserHibernate() {
+    public User getUser() {
         return user;
     }
 
-    public void setUserHibernate(User user) {
+    @JsonBackReference
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -92,7 +97,7 @@ public class Address {
                 ", address='" + address + '\'' +
                 ", addressName='" + addressName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", userHibernate=" + user +
+                ", user=" + user +
                 ", version=" + version +
                 '}';
     }

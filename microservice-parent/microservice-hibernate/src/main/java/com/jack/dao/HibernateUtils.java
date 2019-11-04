@@ -1,6 +1,7 @@
 package com.jack.dao;
 
 import com.jack.entity.Address;
+import com.jack.entity.Order;
 import com.jack.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -32,11 +33,19 @@ public class HibernateUtils {
         return userHibernate;
     }
 
-    public Address getFindByAddress(int id){
-        Session session=sessionFactory.getCurrentSession();
-       Criteria criteria=session.createCriteria(Address.class);
-       criteria.add(Restrictions.eq("id",id));
-       Address address=(Address) criteria.uniqueResult();
-       return address;
+    public Address getFindByAddress(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Address.class);
+        criteria.add(Restrictions.eq("id", id));
+        Address address = (Address) criteria.uniqueResult();
+        return address;
+    }
+
+    public Order getOrderById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Order.class);
+        criteria.add(Restrictions.eq(Order.COL_ID, id));
+        Order order = (Order) criteria.uniqueResult();
+        return order;
     }
 }

@@ -2,6 +2,7 @@ package com.jack.service.Impl;
 
 import com.jack.dao.HibernateUtils;
 import com.jack.entity.Address;
+import com.jack.entity.Order;
 import com.jack.entity.User;
 import com.jack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,10 @@ public class UserServiceImpl implements UserService {
        return  address;
     }
 
+    @Transactional
+    @Override
+    public Order getOrderFindBy(int id){
+      Order order=hibernateUtils.getOrderById(id);
+      return order;
+    }
 }

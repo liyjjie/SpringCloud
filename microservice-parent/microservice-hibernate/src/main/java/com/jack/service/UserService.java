@@ -1,6 +1,7 @@
 package com.jack.service;
 
 import com.jack.entity.Address;
+import com.jack.entity.Order;
 import com.jack.entity.User;
 
 /**
@@ -14,4 +15,6 @@ public interface UserService {
     User getFindById(int id);
 
     Address getFindByAddress(int id);
+
+    Order getOrderFindBy(int id);
 }
