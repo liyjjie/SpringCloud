@@ -3,11 +3,16 @@ package com.jack.controller;
 import com.jack.entity.Address;
 import com.jack.entity.User;
 import com.jack.service.UserService;
+import com.jack.vo.AddressVo;
 import com.jack.vo.UserReturn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * @author ：liyongjie
@@ -32,5 +37,11 @@ public class UserHibernateUtils {
     public Address getAddressById(@PathVariable("id") int id){
        Address address=userService.getFindByAddress(id);
        return address;
+    }
+
+    @GetMapping("/updateAddressById")
+    public String updateAddressById(@RequestBody @Valid AddressVo addressVo){
+       Integer execute=userService.updateAddressFindBy(addressVo);
+        return "success"+execute;
     }
 }

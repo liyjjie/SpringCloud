@@ -1,7 +1,5 @@
 package com.jack.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +8,8 @@ import java.io.Serializable;
  * @author ：liyongjie
  * @ClassName ：Address
  * @date ： 2019-10-31 15:22
- * @modified By：
+ * @modified By：hibernate出现无限递归
+ * 重写toString时多的类不能打印一的一方
  */
 @Entity
 @Table(name = "t_address")
@@ -27,6 +26,12 @@ public class Address implements Serializable {
     private User user;
 
     private Integer version;
+
+    public static final String COL_ID="id";
+    public static final String COL_ADDRESS="address";
+    public static final String COL_ADDRESS_NAME="addressName";
+    public static final String COL_PHONE_NUMBER="phoneNumber";
+    public static final String COL_USER="user";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,7 +80,6 @@ public class Address implements Serializable {
         return user;
     }
 
-    @JsonBackReference
     public void setUser(User user) {
         this.user = user;
     }
@@ -97,7 +101,6 @@ public class Address implements Serializable {
                 ", address='" + address + '\'' +
                 ", addressName='" + addressName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", user=" + user +
                 ", version=" + version +
                 '}';
     }

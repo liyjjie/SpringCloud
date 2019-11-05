@@ -1,12 +1,10 @@
 package com.jack.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jack.vo.UserReturn;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,7 +15,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name="t_user")
-//@JsonIgnoreProperties({"address"})
 public class User implements Serializable {
     private int id;
 
@@ -32,6 +29,7 @@ public class User implements Serializable {
     public static final String COL_ID="id";
     public static final String COL_NAME="name";
     public static final String COL_AGE="age";
+    public static final String COL_ADDRESS="address";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,6 +83,15 @@ public class User implements Serializable {
         this.version = version;
     }
 
+    public UserReturn toVo(){
+        UserReturn userReturn=new UserReturn();
+        userReturn.setId(this.id);
+        userReturn.setAge(this.age);
+        userReturn.setName(this.name);
+        userReturn.setAddress(this.address);
+        return userReturn;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -94,14 +101,5 @@ public class User implements Serializable {
                 ", address=" + address +
                 ", version=" + version +
                 '}';
-    }
-
-    public UserReturn toVo(){
-        UserReturn userReturn=new UserReturn();
-        userReturn.setId(this.id);
-        userReturn.setAge(this.age);
-        userReturn.setName(this.name);
-        userReturn.setAddress(this.address);
-        return userReturn;
     }
 }

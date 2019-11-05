@@ -3,6 +3,7 @@ package com.jack.service;
 import com.jack.entity.Address;
 import com.jack.entity.Order;
 import com.jack.entity.User;
+import com.jack.vo.AddressVo;
 
 /**
  * @author ：liyongjie
@@ -17,4 +18,6 @@ public interface UserService {
     Address getFindByAddress(int id);
 
     Order getOrderFindBy(int id);
+
+    Integer updateAddressFindBy(AddressVo addressVo);
 }
