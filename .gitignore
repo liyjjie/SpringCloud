@@ -1,0 +1,9 @@
+.idea
+.DS_store
+*/.DS_Store
+*/*.iml
+*/*/*.iml
+*.iml
+out
+gen
+spring-cloud.iml
