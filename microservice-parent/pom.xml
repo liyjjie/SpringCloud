@@ -20,6 +20,7 @@
         <module>microservice-provider2</module>
         <module>microservice-provider3</module>
         <module>microservice-zull</module>
+        <module>microservice-swagger</module>
     </modules>
 
 
