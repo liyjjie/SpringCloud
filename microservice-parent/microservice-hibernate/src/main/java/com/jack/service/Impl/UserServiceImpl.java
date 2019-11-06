@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Integer updateAddressFindBy(AddressVo addressVo) {
         List<User> list = hibernateUtils.getOrderByPhoneNumber(addressVo);
-        System.out.println(list.size());
         for (User temp: list ) {
             Set<Address> startSet=new HashSet<>();
             for (Address set: temp.getAddress()) {

@@ -1,6 +1,7 @@
 package com.jack.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -80,6 +81,7 @@ public class Address implements Serializable {
         return user;
     }
 
+    @JsonBackReference
     public void setUser(User user) {
         this.user = user;
     }
@@ -92,16 +94,5 @@ public class Address implements Serializable {
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", addressName='" + addressName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", version=" + version +
-                '}';
     }
 }

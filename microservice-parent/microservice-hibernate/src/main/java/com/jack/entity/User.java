@@ -91,15 +91,4 @@ public class User implements Serializable {
         userReturn.setAddress(this.address);
         return userReturn;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", address=" + address +
-                ", version=" + version +
-                '}';
-    }
 }

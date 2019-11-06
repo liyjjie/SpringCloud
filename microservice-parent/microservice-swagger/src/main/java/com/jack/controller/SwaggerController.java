@@ -6,8 +6,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 /**
  * @author ：liyongjie
  * @ClassName ：SwaggerController
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @modified By：
  */
 @RestController
-@RequestMapping(name = "/SwaggerController")
+@RequestMapping(value = "/SwaggerController")
 public class SwaggerController {
 
     @Autowired
@@ -27,5 +29,11 @@ public class SwaggerController {
     @GetMapping(value="/UserById/{id}")
     public User UserById(@PathVariable(value = "id") Integer id) {
         return swaggerService.getUserById(id);
+    }
+
+    @ApiOperation(value = "获取redis的数据")
+    @GetMapping(value = "/RedisHash")
+    public void RedisHash() throws Exception{
+        swaggerService.getRedisPool();
     }
 }
