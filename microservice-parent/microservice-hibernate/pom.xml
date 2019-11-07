@@ -12,11 +12,6 @@
     <artifactId>microservice-hibernate</artifactId>
     <dependencies>
         <dependency>
-            <groupId>SpringCloud</groupId>
-            <artifactId>microservice-com</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>

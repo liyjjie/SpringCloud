@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
         return order;
     }
 
-    @Override
     @Transactional
+    @Override
     public Integer updateAddressFindBy(AddressVo addressVo) {
         List<User> list = hibernateUtils.getOrderByPhoneNumber(addressVo);
         for (User temp: list ) {
