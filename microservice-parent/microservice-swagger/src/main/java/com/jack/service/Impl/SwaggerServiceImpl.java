@@ -36,17 +36,17 @@ public class SwaggerServiceImpl implements SwaggerService {
         return user;
     }
 
-    @Override
-    public void getRedisPool() throws Exception {
-        JedisPool jedisPool = RedisUtils.getJedisPool("order");
-        try (Jedis jedis = jedisPool.getResource()) {
-            String key = "platform_ratio";
-            String str = jedis.hget(key, "tingmimi");
-            Map<String, BigDecimal> map = mapper.readValue(str, new TypeReference<Map<String, BigDecimal>>() {
-            });
-            for (Map.Entry<String,BigDecimal> temp: map.entrySet() ) {
-                System.out.println(temp.getKey()+"--"+temp.getValue());
-            }
-        }
-    }
+//    @Override
+//    public void getRedisPool() throws Exception {
+//        JedisPool jedisPool = RedisUtils.getJedisPool("order");
+//        try (Jedis jedis = jedisPool.getResource()) {
+//            String key = "platform_ratio";
+//            String str = jedis.hget(key, "tingmimi");
+//            Map<String, BigDecimal> map = mapper.readValue(str, new TypeReference<Map<String, BigDecimal>>() {
+//            });
+//            for (Map.Entry<String,BigDecimal> temp: map.entrySet() ) {
+//                System.out.println(temp.getKey()+"--"+temp.getValue());
+//            }
+//        }
+//    }
 }

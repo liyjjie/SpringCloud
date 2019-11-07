@@ -31,9 +31,9 @@ public class SwaggerController {
         return swaggerService.getUserById(id);
     }
 
-    @ApiOperation(value = "获取redis的数据")
-    @GetMapping(value = "/RedisHash")
-    public void RedisHash() throws Exception{
-        swaggerService.getRedisPool();
-    }
+//    @ApiOperation(value = "获取redis的数据")
+//    @GetMapping(value = "/RedisHash")
+//    public void RedisHash() throws Exception{
+//        swaggerService.getRedisPool();
+//    }
 }

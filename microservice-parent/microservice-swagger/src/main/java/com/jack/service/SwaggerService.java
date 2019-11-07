@@ -12,5 +12,5 @@ public interface SwaggerService {
 
     User getUserById(Integer id);
 
-    void getRedisPool() throws Exception;
+//    void getRedisPool() throws Exception;
 }

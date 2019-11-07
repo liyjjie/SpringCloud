@@ -39,17 +39,17 @@ eureka:
     prefer-ip-address: true
     status-page-url: http://localhost:${server.port}/swagger-ui.html  #指定eurka注册改服务的访问地址
 
-redis:
-  keys: order
-  order:
-    host: 114.55.130.145
-    port: 6379
-    password: tst_test
-    dbIndex: 0
-    timeOut: 2000
-    pool:
-      maxActive: 10
-      maxIdle: 5
-      minIdle: 1
-      maxWait: 2000
-      testOnBorrow: true
+#redis:
+#  keys: order
+#  order:
+#    host: 114.55.130.145
+#    port: 6379
+#    password: tst_test
+#    dbIndex: 0
+#    timeOut: 2000
+#    pool:
+#      maxActive: 10
+#      maxIdle: 5
+#      minIdle: 1
+#      maxWait: 2000
+#      testOnBorrow: true
