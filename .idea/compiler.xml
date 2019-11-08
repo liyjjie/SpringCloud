@@ -21,6 +21,7 @@
         <module name="microservice-provider-hystrix" />
         <module name="microservice-provider2" />
         <module name="microservice-provider3" />
+        <module name="microservice-swagger" />
         <module name="microservice-zull" />
       </profile>
     </annotationProcessing>
