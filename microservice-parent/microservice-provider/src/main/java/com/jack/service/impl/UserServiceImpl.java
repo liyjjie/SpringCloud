@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(int id) {
         User user = userDao.getUser(id);
+        if(user==null){
+            throw new RuntimeException("无返回数据");
+        }
         System.out.println("microservice-provider微服务在响应客户端请求……");
         System.out.println("user : " + user);
         return user;

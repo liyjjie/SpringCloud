@@ -21,6 +21,7 @@
         <module>microservice-provider3</module>
         <module>microservice-zull</module>
         <module>microservice-swagger</module>
+        <module>microservice-feign</module>
     </modules>
 
 
