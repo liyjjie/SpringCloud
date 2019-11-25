@@ -35,5 +35,5 @@ eureka:
 info:
   app.name: microservice-provider
   company.name: www.liyongjie.com
-  build.artifactId: microservice-provider
-  build.version: 1.0-SNAPSHOT
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

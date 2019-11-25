@@ -3,15 +3,15 @@
 <mapper namespace="com.jack.dao.UserDao">
 
     <select id="getUser" resultType="User" parameterType="int">
-        select * from user where ID=#{id}
+        select * from t_user where id=#{id}
     </select>
 
     <select id="getUsers" resultType="User">
-    	select * from user
+    	select * from t_user
     </select>
 
     <insert id="addUser" parameterType="User">
-    	insert into user(NAME, AGE) values(#{name}, #{age})
+    	insert into t_user(NAME, AGE) values(#{name}, #{age})
     </insert>
 
 </mapper>
