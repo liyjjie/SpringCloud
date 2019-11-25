@@ -3,7 +3,7 @@
 <mapper namespace="com.jack.dao.UserDao">
 
     <select id="getUser" resultType="User" parameterType="int">
-        select * from t_user where ID=#{id}
+        select * from t_user where id=#{id}
     </select>
 
     <select id="getUsers" resultType="User">

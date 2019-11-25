@@ -24,19 +24,16 @@ import java.util.List;
 public class ControllerFeign {
 
     @Autowired
-    private ServiceFeign serviceFeign;
-
-    @Autowired
     private MicService micService;
 
     @RequestMapping("/getUserAll")
     public List<User> getUserAll(){
-       return serviceFeign.getAll();
+       return micService.getUserAll();
     }
 
     @RequestMapping("/getUserById/{id}")
     public User getUserById(@PathVariable("id") int id){
-        return serviceFeign.getUser(id);
+        return micService.getById(id);
     }
 
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")

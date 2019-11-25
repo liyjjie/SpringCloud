@@ -14,6 +14,8 @@ public class User {
 
     private int age;
 
+    private int version;
+
     public User() {
     }
 
@@ -48,12 +50,21 @@ public class User {
         this.age = age;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", version=" + version +
                 '}';
     }
 }
