@@ -2,6 +2,7 @@ package com.jack.controller;
 
 import com.jack.entity.User;
 import com.jack.service.SwaggerService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -18,22 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/SwaggerController")
+@Api(value = "/SwaggerController",description = "根据url的id获取哟用户详细信息")
 public class SwaggerController {
 
     @Autowired
     private SwaggerService swaggerService;
 
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
-    @ApiImplicitParams(
-        @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long"))
     @GetMapping(value="/UserById/{id}")
     public User UserById(@PathVariable(value = "id") Integer id) {
         return swaggerService.getUserById(id);
     }
 
-//    @ApiOperation(value = "获取redis的数据")
-//    @GetMapping(value = "/RedisHash")
-//    public void RedisHash() throws Exception{
-//        swaggerService.getRedisPool();
-//    }
 }

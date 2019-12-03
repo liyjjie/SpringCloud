@@ -11,6 +11,4 @@ import com.jack.entity.User;
 public interface SwaggerService {
 
     User getUserById(Integer id);
-
-//    void getRedisPool() throws Exception;
 }

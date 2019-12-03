@@ -1,0 +1,88 @@
+server:
+  port: 10080
+
+spring:
+  datasource:
+    initialize: false
+    master:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: "jdbc:mysql://localhost:3306/custom?useUnicode=true&characterEncoding=utf-8&useSSL=false"
+      username: root
+      password: root
+      #初始化大小，最小，最大
+      initialSize: 3
+      minIdle: 3
+      maxActive: 30
+      #配置获取连接等待超时的时间
+      maxWait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      #打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,log4j
+      #通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+
+
+#es
+es_config:
+  url: http://127.0.0.1:9200
+  defaultMaxTotalConnectionPerRoute: 10
+  maxTotalConnection: 20
+  index: test_index1
+  type: doc
+  indexJack: jack
+  typtJack: doc
+
+
+hibernate:
+  dialect: org.hibernate.dialect.MySQLDialect
+  show_sql: true
+  format_sql: true
+
+
+feign:
+  hystrix:
+    enabled: true
+
+
+
+
+
+
+redis:
+  order:
+    host: 114.55.130.145  #地址
+    port: 6379         #端口号
+    password: tst_test #密码
+    dbIndex: 12     #库
+    timeOut: 2000
+    pool:
+      maxActive: 100
+      maxIdle: 50
+      minIdle: 5
+      maxWait: 2000
+      testOnBorrow: true
+  keys: order
+
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      #defaultZone: http://localhost:9001/eureka
+      defaultZone: http://eureka9001.com:9001/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9003.com:9003/eureka/
+  instance:
+    instance-id: microservice-hibernate10080            #自定义服务名称信息
+    prefer-ip-address: true
+    status-page-url: http://localhost:${server.port}/swagger-ui.html  #指定eurka注册改服务的访问地址(swagger地址)
