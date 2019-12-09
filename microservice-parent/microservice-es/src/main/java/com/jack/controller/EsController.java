@@ -46,7 +46,7 @@ public class EsController {
         }
     }
 
-    //token认证通过jwt获取用户信息
+    //token认证通过jwt获取用户信息，一般字符较长带特殊字符时采用以下方式接收防止数据丢失
     @PostMapping("/{jwt}/demo")
     public void jwt(@PathVariable("jwt") String jwt) {
         AccessToken accessToken = AccessTokenJwtUtils.dncrypt(jwt);
@@ -72,7 +72,6 @@ public class EsController {
         }
     }
 
-    //使用hibernate连接本地数据库
     @GetMapping("/userHibernateUtilsById/{id}")
     public User userHibernateUtilsById(@PathVariable("id") Long id) {
         User user = esService.userById(id);
