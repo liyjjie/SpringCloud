@@ -3,6 +3,7 @@ package com.jack.service;
 import com.jack.domain.User;
 import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
+import com.jack.vo.UserVo;
 
 /**
  * @author ：liyongjie
@@ -17,6 +18,8 @@ public interface EsService {
     void EsInsert(EsInsertVo esInsertVo);
 
     EsInsertReturn getEs(Long id);
+
+    void saveUser(UserVo vo);
 
     Boolean updateOrInsertEs(EsInsertReturn esInsertReturn);
 

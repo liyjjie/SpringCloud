@@ -30,7 +30,7 @@ public class DynamicDataSourceAspect {
     public DynamicDataSourceAspect() {
     }
 
-    @Pointcut("execution(* com.tst..service..*.*(..))")
+    @Pointcut("execution(* com.jack..service..*.*(..))")
     public void dynamicDs() {
     }
 

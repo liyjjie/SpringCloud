@@ -6,8 +6,11 @@ import com.jack.dao.EsDao;
 import com.jack.domain.User;
 import com.jack.repo.CommonRepo;
 import com.jack.service.EsService;
+import com.jack.utils.HibernateUtils;
+import com.jack.utils.hibernate.DataSource;
 import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
+import com.jack.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,10 +40,19 @@ public class EsServiceImpl implements EsService {
     private CommonRepo commonRepo;
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
+    @DataSource(readOnly=true)
     public User userById(Long id) {
         User user = esDao.userByid(id);
         return user;
+    }
+
+    @Override
+    @Transactional
+    @DataSource(readOnly = true)
+    public void saveUser(UserVo vo){
+      User user=vo.toVo();
+        HibernateUtils.getSession().save(user);
     }
 
     @Override

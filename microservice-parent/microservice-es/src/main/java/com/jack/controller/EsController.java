@@ -72,10 +72,17 @@ public class EsController {
         }
     }
 
+    @ApiOperation("根据id查询数据(查询主库)测试")
     @GetMapping("/userHibernateUtilsById/{id}")
     public User userHibernateUtilsById(@PathVariable("id") Long id) {
         User user = esService.userById(id);
         return user;
+    }
+
+    @ApiOperation("测试主从库(添加从库)测试")
+    @GetMapping("/saveUser")
+    public void saveUser(@RequestBody UserVo vo){
+        esService.saveUser(vo);
     }
 
     //es操作
