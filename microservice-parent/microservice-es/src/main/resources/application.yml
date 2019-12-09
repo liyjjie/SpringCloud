@@ -41,8 +41,8 @@ es_config:
   maxTotalConnection: 20
   index: test_index1
   type: doc
-  indexJack: jack
-  typtJack: doc
+  indexTwo: index_2
+  typtTwo: doc
 
 
 hibernate:

@@ -18,7 +18,15 @@ public interface EsService {
 
     EsInsertReturn getEs(Long id);
 
-    Boolean updateEs(EsInsertReturn esInsertReturn);
+    Boolean updateOrInsertEs(EsInsertReturn esInsertReturn);
 
-    Boolean deleteEs(Long id);
+    Boolean update(EsInsertVo esInsertVo);
+
+    Boolean deleteEs(String id);
+
+    Boolean createIndex(String index);
+
+    Boolean deleteIndex(String index);
+
+    Boolean create(String index);
 }

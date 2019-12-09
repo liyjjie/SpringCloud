@@ -11,12 +11,19 @@ import java.lang.reflect.Type;
  */
 public interface CommonRepo {
 
-    Boolean insert(String index, String type, String json, Type typeOfSrc);
+    Boolean insert(String index, String type, String json);
 
     Object get(String id, String index, String type, Class typeOfSrc);
+
+    Boolean updateOrInsert(String index, String type, String id, String json, Type typeOfSrc);
 
     Boolean update(String index, String type, String id, String json, Type typeOfSrc);
 
     Boolean delete(String id, String index, String type);
 
+    Boolean createIndex(String index);
+
+    Boolean deleteIndex(String index);
+
+    Boolean create(String index);
 }

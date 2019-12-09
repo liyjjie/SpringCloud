@@ -47,7 +47,7 @@ public class EsServiceImpl implements EsService {
     public void EsInsert(EsInsertVo esInsertVo) {
         long date = new Date().getTime();
         esInsertVo.setCreateDate(date);
-        commonRepo.insert(esConf.getIndex(), esConf.getType(), new Gson().toJson(esInsertVo, EsInsertVo.class), EsInsertVo.class);
+        commonRepo.insert(esConf.getIndex(), esConf.getType(), new Gson().toJson(esInsertVo, EsInsertVo.class));
     }
 
     @Override
@@ -57,14 +57,37 @@ public class EsServiceImpl implements EsService {
     }
 
     @Override
-    public Boolean updateEs(EsInsertReturn esInsertReturn) {
-        Boolean flag = commonRepo.update(esConf.getIndex(), esConf.getType(), String.valueOf(esInsertReturn.getId()), new Gson().toJson(esInsertReturn, EsInsertReturn.class), EsInsertReturn.class);
+    public Boolean updateOrInsertEs(EsInsertReturn esInsertReturn) {
+        Boolean flag = commonRepo.updateOrInsert(esConf.getIndex(), esConf.getType(), String.valueOf(esInsertReturn.getId()), new Gson().toJson(esInsertReturn, EsInsertReturn.class), EsInsertReturn.class);
         return flag;
     }
 
     @Override
-    public Boolean deleteEs(Long id) {
-        Boolean flag = commonRepo.delete(String.valueOf(id), esConf.getIndex(), esConf.getType());
+    public Boolean update(EsInsertVo esInsertVo){
+        Boolean flag = commonRepo.update(esConf.getIndex(),esConf.getType(),String.valueOf(esInsertVo.getId()),new Gson().toJson(esInsertVo,EsInsertVo.class),EsInsertVo.class);
         return flag;
+    }
+
+    @Override
+    public Boolean deleteEs(String id) {
+        Boolean flag = commonRepo.delete(String.valueOf(id), esConf.getIndexTwo(), esConf.getTypeTwo());
+        return flag;
+    }
+
+    public Boolean createIndex(String index){
+          Boolean flag=commonRepo.createIndex(index);
+          return flag;
+    }
+
+    @Override
+    public Boolean deleteIndex(String index){
+      Boolean flag=commonRepo.deleteIndex(index);
+      return flag;
+    }
+
+    @Override
+    public Boolean create(String index){
+      Boolean flag=commonRepo.create(index);
+      return flag;
     }
 }

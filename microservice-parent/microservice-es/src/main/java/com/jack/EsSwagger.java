@@ -32,8 +32,8 @@ public class EsSwagger {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("测试swagger网页")
-                .description("测试swagger网页")
+                .title("ESswagger")
+                .description("ESswagger")
                 .termsOfServiceUrl("http://xxxx.xxxx.com/")
                 .contact("liyongjie")
                 .version("1.0")

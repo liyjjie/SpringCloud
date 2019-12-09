@@ -22,9 +22,9 @@ public class EsConf {
 
     private String type;
 
-    private String indexJack;
+    private String indexTwo;
 
-    private String typeJack;
+    private String typeTwo;
 
     public String getUrl() {
         return url;
@@ -66,20 +66,20 @@ public class EsConf {
         this.type = type;
     }
 
-    public String getIndexJack() {
-        return indexJack;
+    public String getIndexTwo() {
+        return indexTwo;
     }
 
-    public void setIndexJack(String indexJack) {
-        this.indexJack = indexJack;
+    public void setIndexTwo(String indexTwo) {
+        this.indexTwo = indexTwo;
     }
 
-    public String getTypeJack() {
-        return typeJack;
+    public String getTypeTwo() {
+        return typeTwo;
     }
 
-    public void setTypeJack(String typeJack) {
-        this.typeJack = typeJack;
+    public void setTypeTwo(String typeTwo) {
+        this.typeTwo = typeTwo;
     }
 
     @Override
@@ -90,8 +90,8 @@ public class EsConf {
                 ", maxTotalConnection=" + maxTotalConnection +
                 ", index='" + index + '\'' +
                 ", type='" + type + '\'' +
-                ", indexJack='" + indexJack + '\'' +
-                ", typeJack='" + typeJack + '\'' +
+                ", indexTwo='" + indexTwo + '\'' +
+                ", typeTwo='" + typeTwo + '\'' +
                 '}';
     }
 }

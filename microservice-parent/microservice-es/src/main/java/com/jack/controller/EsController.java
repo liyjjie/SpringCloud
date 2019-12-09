@@ -7,9 +7,7 @@ import com.jack.utils.execl.ExcelImportParam;
 import com.jack.utils.execl.ExcelImportUtils;
 import com.jack.utils.jwt.AccessToken;
 import com.jack.utils.jwt.AccessTokenJwtUtils;
-import com.jack.vo.EsInsertReturn;
-import com.jack.vo.EsInsertVo;
-import com.jack.vo.ResultVo;
+import com.jack.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -96,18 +94,43 @@ public class EsController {
         return esInsertReturn;
     }
 
-    @ApiOperation("es修改数据")
-    @PostMapping("/updateEs")
-    public Boolean updateEs(@RequestBody EsInsertReturn esInsertReturn) {
-        Boolean flag = esService.updateEs(esInsertReturn);
+    @ApiOperation("es修改数据/添加数据")
+    @PostMapping("/updateOrInsertEs")
+    public Boolean updateOrInsertEs(@RequestBody EsInsertReturn esInsertReturn) {
+        Boolean flag = esService.updateOrInsertEs(esInsertReturn);
         return flag;
     }
 
-    @ApiOperation("es删除数据")
+    @ApiOperation("es修改数据{暂时不可用}")
+    @PostMapping("/update")
+    public Boolean uodate(@RequestBody EsInsertVo esInsertVo){
+       return esService.update(esInsertVo);
+    }
+
+    @ApiOperation("es删除数据(清空文档)")
     @DeleteMapping("/deleteEs/{id}")
-    public Boolean deleteEs(@PathVariable("id") Long id) {
+    public Boolean deleteEs(@PathVariable("id") String id) {
         Boolean flag = esService.deleteEs(id);
         return flag;
+    }
 
+    @ApiOperation("es添加mapping,setting(暂不可用)")
+    @GetMapping("/createIndex/{index}")
+    public Boolean createIndex(@PathVariable("index") String index){
+        Boolean flag=esService.createIndex(index);
+        return flag;
+    }
+
+    @ApiOperation("es删除索引")
+    @DeleteMapping("/deleteIndex/{index}")
+    public Boolean deleteIndex(@PathVariable("index") String index){
+       Boolean flag=esService.deleteIndex(index);
+       return flag;
+    }
+
+    @ApiOperation("添加索引")
+    @GetMapping("/create/{index}")
+    public Boolean create(@PathVariable("index")String index){
+      return   esService.create(index);
     }
 }
