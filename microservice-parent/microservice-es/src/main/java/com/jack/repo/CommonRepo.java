@@ -1,12 +1,7 @@
 package com.jack.repo;
 
-
-import com.jack.vo.EsInsertReturn;
-import com.jack.vo.EsInsertVo;
-
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author ：liyongjie
