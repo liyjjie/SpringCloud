@@ -1,7 +1,12 @@
 package com.jack.repo;
 
 
+import com.jack.vo.EsInsertReturn;
+import com.jack.vo.EsInsertVo;
+
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author ：liyongjie
@@ -11,19 +16,19 @@ import java.lang.reflect.Type;
  */
 public interface CommonRepo {
 
-    Boolean insert(String index, String type, String json);
+    Boolean insert(String index, String type, String json, Long id);
 
     Object get(String id, String index, String type, Class typeOfSrc);
 
     Boolean updateOrInsert(String index, String type, String id, String json, Type typeOfSrc);
 
-    Boolean update(String index, String type, String id, String json, Type typeOfSrc);
+    Boolean update(String index, String type, String id, String json);
 
     Boolean delete(String id, String index, String type);
-
-    Boolean createIndex(String index);
 
     Boolean deleteIndex(String index);
 
     Boolean create(String index);
+
+    List<Object> getIds(Class clazz, String[] ids, String index, String type);
 }

@@ -3,30 +3,30 @@ package com.jack.repo;
 import com.google.gson.Gson;
 import com.jack.es.EsClientFactory;
 import com.jack.utils.exception.ServiceException;
+import com.jack.vo.EsInsertVo;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
-import io.searchbox.core.Delete;
-import io.searchbox.core.Get;
-import io.searchbox.core.Index;
-import io.searchbox.core.Update;
+import io.searchbox.core.*;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
+import org.elasticsearch.index.query.IdsQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Type;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author ：liyongjie
  * @ClassName ：EsRepo
  * @date ： 2019-11-29 09:59
- * @modified By：
+ * @modified By：es实时搜索两种方式
  */
 @Repository
 public class EsRepo implements CommonRepo {
@@ -36,18 +36,13 @@ public class EsRepo implements CommonRepo {
     @Resource(name = "EsClientFactory")
     private EsClientFactory esClientFactory;
 
-
-    //线程安全时间类型
-    private LocalDate getLocalDateFromDate(Date date) {
-        return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
-    }
-
     //es添加数据
     @Override
-    public Boolean insert(String index, String type, String json) {
+    public Boolean insert(String index, String type, String json, Long id) {
         JestClient jestClient = esClientFactory.getJestClient();
         try {
             Index i = new Index.Builder(json)
+                    .id(String.valueOf(id))
                     .index(index)
                     .type(type)
                     .build();
@@ -81,7 +76,7 @@ public class EsRepo implements CommonRepo {
             }
             return jr.getSourceAsObject(typeOfSrc);
         } catch (Exception e) {
-            logger.info("插入文档失败:{}", e);
+            logger.info("取出文档失败:{}", e);
         }
         return null;
     }
@@ -109,7 +104,7 @@ public class EsRepo implements CommonRepo {
     }
 
     @Override
-    public Boolean update(String index, String type, String id, String json, Type typeOfSrc) {
+    public Boolean update(String index, String type, String id, String json) {
         JestClient jestClient = esClientFactory.getJestClient();
         try {
             Update update = new Update.Builder(json)
@@ -154,7 +149,6 @@ public class EsRepo implements CommonRepo {
     @Override
     public Boolean deleteIndex(String index) {
         JestClient jestClient = esClientFactory.getJestClient();
-//        ChronoUnit.DAYS.between();
         try {
             JestResult jr = jestClient.execute(new DeleteIndex.Builder(index).build());
             if (!jr.isSucceeded()) {
@@ -183,73 +177,28 @@ public class EsRepo implements CommonRepo {
         return true;
     }
 
-    /**
-     * number_of_shards：分片数量
-     * enabled: false 该字段不能被查询和store
-     * field1:
-     *
-     * @param index
-     * @return
-     */
-    @Override
-    public Boolean createIndex(String index) {
+    public List<Object> getIds(Class clazz, String[] ids, String index, String type) {
         JestClient jestClient = esClientFactory.getJestClient();
-        String settings="{\n" +
-                "\t\"number_of_shards\": 5,\n" +
-                "\t\"analysis\": {\n" +
-                "\t\t\"filter\": {\n" +
-                "\t\t\t\"ngram_filter\": {\n" +
-                "\t\t\t\t\"type\": \"ngram\",\n" +
-                "\t\t\t\t\"min_gram\": 1,\n" +
-                "\t\t\t\t\"max_gram\": 2\n" +
-                "\t\t\t}\n" +
-                "\t\t},\n" +
-                "\t\t\"analyzer\": {\n" +
-                "\t\t\t\"ngram_analyzer\": {\n" +
-                "\t\t\t\t\"type\": \"custom\",\n" +
-                "\t\t\t\t\"tokenizer\": \"standard\",\n" +
-                "\t\t\t\t\"filter\": [\n" +
-                "\t\t\t\t\t\"lowercase\",\n" +
-                "\t\t\t\t\t\"ngram_filter\"\n" +
-                "\t\t\t\t]\n" +
-                "\t\t\t}\n" +
-                "\t\t}\n" +
-                "\t}\n" +
-                "}";
-
-        String mappings="{\n" +
-                "\t\t\"doc\": {\n" +
-                "\t\t\t\"_all\": {\n" +
-                "\t\t\t\t\"type\": \"text\",\n" +
-                "\t\t\t\t\"analyzer\": \"ngram_analyzer\",\n" +
-                "\t\t\t\t\"search_analyzer\": \"standard\"\n" +
-                "\t\t\t},\n" +
-                "\t\t\t\"properties\": {\n" +
-                "\t\t\t\t\"word\": {\n" +
-                "\t\t\t\t\t\"type\": \"keyword\",\n" +
-                "\t\t\t\t\t\"analyzer\": \"ngram_analyzer\",\n" +
-                "\t\t\t\t\t\"search_analyzer\": \"standard\"\n" +
-                "\t\t\t\t},\n" +
-                "\t\t\t\t\"definition\": {\n" +
-                "\t\t\t\t\t\"type\": \"keyword\"\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t}\n" +
-                "\t\t}\n" +
-                "\t}";
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         try {
-            JestResult jr = jestClient.execute(new CreateIndex
-                    .Builder(index)
-                    .settings(settings)
-                    .mappings(mappings)
-                    .build());
-            if (!jr.isSucceeded()) {
-                logger.info("es error");
-                return false;
+            IdsQueryBuilder idsQueryBuilder = QueryBuilders.idsQuery();
+            for (String temp : ids) {
+                idsQueryBuilder.addIds(temp);
             }
+            searchSourceBuilder.query(idsQueryBuilder);
+            searchSourceBuilder.sort(new FieldSortBuilder(EsInsertVo.COL_SEARCHCONTENTS).order(SortOrder.DESC));
+//            String append = "{\"query\":" + idsQueryBuilder.toString() + "}";
+            Search search = new Search.Builder(idsQueryBuilder.toString()).addIndex(index).addType(type).build();
+            JestResult jr = jestClient.execute(search);
+            if (!jr.isSucceeded()) {
+                logger.info("error es");
+                return null;
+            }
+            List<Object> list = jr.getSourceAsObjectList(clazz);
+            return list;
         } catch (Exception e) {
-            logger.info("创建索引失败" + index);
-            return false;
+            logger.info("error" + e);
         }
-        return true;
+        return null;
     }
 }

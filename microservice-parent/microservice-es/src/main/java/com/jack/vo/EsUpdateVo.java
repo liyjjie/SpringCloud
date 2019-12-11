@@ -1,20 +1,14 @@
 package com.jack.vo;
 
-import io.searchbox.annotations.JestId;
-
-import java.io.Serializable;
-
 /**
  * @author ：liyongjie
- * @ClassName ：EsInsertVo
- * @date ： 2019-11-29 15:29
+ * @ClassName ：EsUpdateVo
+ * @date ： 2019-12-10 10:24
  * @modified By：
  */
-public class EsInsertVo implements Serializable {
-    private static final long serialVersionUID = 9086588908563096157L;
+public class EsUpdateVo {
 
-//    @JestId
-    private Long id;
+    private String id;
 
     private Long userId;
 
@@ -22,13 +16,11 @@ public class EsInsertVo implements Serializable {
 
     private Long createDate;
 
-    public static final String COL_SEARCHCONTENTS="searchContents";
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,21 +50,11 @@ public class EsInsertVo implements Serializable {
 
     @Override
     public String toString() {
-        return "EsInsertVo{" +
-                "id=" + id +
+        return "EsUpdateVo{" +
+                "id='" + id + '\'' +
                 ", userId=" + userId +
                 ", searchContents='" + searchContents + '\'' +
                 ", createDate=" + createDate +
                 '}';
     }
-
-    public EsInsertReturn toVo(){
-        EsInsertReturn esInsertReturn=new EsInsertReturn();
-        esInsertReturn.setId(this.getId());
-        esInsertReturn.setCreateDate(this.getCreateDate());
-        esInsertReturn.setSearchContents(this.getSearchContents());
-        esInsertReturn.setUserId(this.getUserId());
-        return esInsertReturn;
-    }
-
 }

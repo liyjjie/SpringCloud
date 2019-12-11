@@ -9,6 +9,7 @@ import com.jack.utils.jwt.AccessToken;
 import com.jack.utils.jwt.AccessTokenJwtUtils;
 import com.jack.vo.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 //es搜索
 @RestController
-@Api(value = "")
+@Api(value = "/EsController")
 public class EsController {
 
     @Autowired
@@ -81,7 +82,7 @@ public class EsController {
 
     @ApiOperation("测试主从库(添加从库)测试")
     @GetMapping("/saveUser")
-    public void saveUser(@RequestBody UserVo vo){
+    public void saveUser(@RequestBody UserVo vo) {
         esService.saveUser(vo);
     }
 
@@ -94,7 +95,7 @@ public class EsController {
 
     @ApiOperation("es查询数据")
     @GetMapping("/getEs/{id}")
-    public EsInsertReturn getEs(@PathVariable("id") Long id) {
+    public EsInsertReturn getEs(@PathVariable("id") String id) {
         EsInsertReturn esInsertReturn = esService.getEs(id);
         System.out.println(esInsertReturn);
         return esInsertReturn;
@@ -107,10 +108,10 @@ public class EsController {
         return flag;
     }
 
-    @ApiOperation("es修改数据{暂时不可用}")
+    @ApiOperation("es修改数据")
     @PostMapping("/update")
-    public Boolean uodate(@RequestBody EsInsertVo esInsertVo){
-       return esService.update(esInsertVo);
+    public Boolean update(@RequestBody EsUpdateVo esUpdateVo) {
+        return esService.update(esUpdateVo);
     }
 
     @ApiOperation("es删除数据(清空文档)")
@@ -120,23 +121,23 @@ public class EsController {
         return flag;
     }
 
-    @ApiOperation("es添加mapping,setting(暂不可用)")
-    @GetMapping("/createIndex/{index}")
-    public Boolean createIndex(@PathVariable("index") String index){
-        Boolean flag=esService.createIndex(index);
-        return flag;
-    }
-
     @ApiOperation("es删除索引")
     @DeleteMapping("/deleteIndex/{index}")
-    public Boolean deleteIndex(@PathVariable("index") String index){
-       Boolean flag=esService.deleteIndex(index);
-       return flag;
+    public Boolean deleteIndex(@PathVariable("index") String index) {
+        Boolean flag = esService.deleteIndex(index);
+        return flag;
     }
 
     @ApiOperation("添加索引")
     @GetMapping("/create/{index}")
-    public Boolean create(@PathVariable("index")String index){
-      return   esService.create(index);
+    public Boolean create(@PathVariable("index") String index) {
+        return esService.create(index);
+    }
+
+    @ApiOperation("根据id查询(多个id)")
+    @ApiImplicitParam(name = "id", value = "ids", required = true, dataType = "String", paramType = "query")
+    @RequestMapping(value = "/getIds", method = RequestMethod.GET)
+    public List<EsInsertReturn> getIds(@RequestParam String[] ids) {
+        return esService.getIds(ids);
     }
 }

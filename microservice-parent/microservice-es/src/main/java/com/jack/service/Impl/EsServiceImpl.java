@@ -10,12 +10,16 @@ import com.jack.utils.HibernateUtils;
 import com.jack.utils.hibernate.DataSource;
 import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
+import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
+import org.apache.commons.collections.ArrayStack;
+import org.elasticsearch.common.recycler.Recycler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -30,9 +34,6 @@ public class EsServiceImpl implements EsService {
     @Autowired
     private EsDao esDao;
 
-//    @Resource(name = "EsClientFactory")
-//    private EsClientFactory esClientFactory;
-
     @Autowired
     private EsConf esConf;
 
@@ -41,7 +42,7 @@ public class EsServiceImpl implements EsService {
 
     @Override
     @Transactional
-    @DataSource(readOnly=true)
+    @DataSource(readOnly = true)
     public User userById(Long id) {
         User user = esDao.userByid(id);
         return user;
@@ -50,8 +51,8 @@ public class EsServiceImpl implements EsService {
     @Override
     @Transactional
     @DataSource(readOnly = true)
-    public void saveUser(UserVo vo){
-      User user=vo.toVo();
+    public void saveUser(UserVo vo) {
+        User user = vo.toVo();
         HibernateUtils.getSession().save(user);
     }
 
@@ -59,12 +60,12 @@ public class EsServiceImpl implements EsService {
     public void EsInsert(EsInsertVo esInsertVo) {
         long date = new Date().getTime();
         esInsertVo.setCreateDate(date);
-        commonRepo.insert(esConf.getIndex(), esConf.getType(), new Gson().toJson(esInsertVo, EsInsertVo.class));
+        commonRepo.insert(esConf.getIndex(), esConf.getType(), new Gson().toJson(esInsertVo, EsInsertVo.class), esInsertVo.getId());
     }
 
     @Override
-    public EsInsertReturn getEs(Long id) {
-        EsInsertVo esInsertVo = (EsInsertVo) commonRepo.get(String.valueOf(id), esConf.getIndex(), esConf.getType(), EsInsertVo.class);
+    public EsInsertReturn getEs(String id) {
+        EsInsertVo esInsertVo = (EsInsertVo) commonRepo.get(id, esConf.getIndex(), esConf.getType(), EsInsertVo.class);
         return esInsertVo.toVo();
     }
 
@@ -75,31 +76,39 @@ public class EsServiceImpl implements EsService {
     }
 
     @Override
-    public Boolean update(EsInsertVo esInsertVo){
-        Boolean flag = commonRepo.update(esConf.getIndex(),esConf.getType(),String.valueOf(esInsertVo.getId()),new Gson().toJson(esInsertVo,EsInsertVo.class),EsInsertVo.class);
+    public Boolean update(EsUpdateVo esUpdateVo) {
+        //单纯的修改数据格式一定要保持如下
+        Map<String, Object> map = new HashMap<>();
+        map.put("doc", esUpdateVo);
+        Boolean flag = commonRepo.update(esConf.getIndex(), esConf.getType(), String.valueOf(esUpdateVo.getId()), new Gson().toJson(map, Map.class));
         return flag;
     }
 
     @Override
     public Boolean deleteEs(String id) {
-        Boolean flag = commonRepo.delete(String.valueOf(id), esConf.getIndexTwo(), esConf.getTypeTwo());
+        Boolean flag = commonRepo.delete(String.valueOf(id), esConf.getIndex(), esConf.getType());
         return flag;
     }
 
-    public Boolean createIndex(String index){
-          Boolean flag=commonRepo.createIndex(index);
-          return flag;
+    @Override
+    public Boolean deleteIndex(String index) {
+        Boolean flag = commonRepo.deleteIndex(index);
+        return flag;
     }
 
     @Override
-    public Boolean deleteIndex(String index){
-      Boolean flag=commonRepo.deleteIndex(index);
-      return flag;
+    public Boolean create(String index) {
+        Boolean flag = commonRepo.create(index);
+        return flag;
     }
 
-    @Override
-    public Boolean create(String index){
-      Boolean flag=commonRepo.create(index);
-      return flag;
+    public List<EsInsertReturn> getIds(String[] ids) {
+        List<Object> list = commonRepo.getIds(EsInsertVo.class, ids, esConf.getIndex(), esConf.getType());
+        List<EsInsertVo> result = new ArrayList<>();
+        for (Object temp : list) {
+            result.add((EsInsertVo) temp);
+        }
+        List<EsInsertReturn> resultList = result.stream().map(EsInsertVo::toVo).collect(Collectors.toList());
+        return resultList;
     }
 }

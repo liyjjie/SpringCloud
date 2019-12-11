@@ -3,7 +3,11 @@ package com.jack.service;
 import com.jack.domain.User;
 import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
+import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author ：liyongjie
@@ -17,19 +21,19 @@ public interface EsService {
 
     void EsInsert(EsInsertVo esInsertVo);
 
-    EsInsertReturn getEs(Long id);
+    EsInsertReturn getEs(String id);
 
     void saveUser(UserVo vo);
 
     Boolean updateOrInsertEs(EsInsertReturn esInsertReturn);
 
-    Boolean update(EsInsertVo esInsertVo);
+    Boolean update(EsUpdateVo esUpdateVo);
 
     Boolean deleteEs(String id);
-
-    Boolean createIndex(String index);
 
     Boolean deleteIndex(String index);
 
     Boolean create(String index);
+
+    List<EsInsertReturn> getIds(String[] ids);
 }
