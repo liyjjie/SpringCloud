@@ -102,7 +102,7 @@ public class EsServiceImpl implements EsService {
         return flag;
     }
 
-    public List<EsInsertReturn> getIds(String[] ids) {
+    public List<EsInsertReturn> getIds(List<String> ids) {
         List<Object> list = commonRepo.getIds(EsInsertVo.class, ids, esConf.getIndex(), esConf.getType());
         List<EsInsertVo> result = new ArrayList<>();
         for (Object temp : list) {

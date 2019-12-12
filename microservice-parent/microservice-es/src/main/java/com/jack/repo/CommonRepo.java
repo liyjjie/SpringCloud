@@ -25,5 +25,5 @@ public interface CommonRepo {
 
     Boolean create(String index);
 
-    List<Object> getIds(Class clazz, String[] ids, String index, String type);
+    List<Object> getIds(Class clazz, List<String> ids, String index, String type);
 }

@@ -34,5 +34,5 @@ public interface EsService {
 
     Boolean create(String index);
 
-    List<EsInsertReturn> getIds(String[] ids);
+    List<EsInsertReturn> getIds(List<String> ids);
 }

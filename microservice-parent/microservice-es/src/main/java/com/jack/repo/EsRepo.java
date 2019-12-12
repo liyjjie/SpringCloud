@@ -177,7 +177,15 @@ public class EsRepo implements CommonRepo {
         return true;
     }
 
-    public List<Object> getIds(Class clazz, String[] ids, String index, String type) {
+    /**
+     * 对排序字段searchSourceBuilder 在设置keyword的type
+     * @param clazz
+     * @param ids
+     * @param index
+     * @param type
+     * @return
+     */
+    public List<Object> getIds(Class clazz, List<String> ids, String index, String type) {
         JestClient jestClient = esClientFactory.getJestClient();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         try {
@@ -186,9 +194,9 @@ public class EsRepo implements CommonRepo {
                 idsQueryBuilder.addIds(temp);
             }
             searchSourceBuilder.query(idsQueryBuilder);
-            searchSourceBuilder.sort(new FieldSortBuilder(EsInsertVo.COL_SEARCHCONTENTS).order(SortOrder.DESC));
+//            searchSourceBuilder.sort(new FieldSortBuilder(EsInsertVo.COL_SEARCHCONTENTS).order(SortOrder.DESC));
 //            String append = "{\"query\":" + idsQueryBuilder.toString() + "}";
-            Search search = new Search.Builder(idsQueryBuilder.toString()).addIndex(index).addType(type).build();
+            Search search = new Search.Builder(searchSourceBuilder.toString()).addIndex(index).addType(type).build();
             JestResult jr = jestClient.execute(search);
             if (!jr.isSucceeded()) {
                 logger.info("error es");

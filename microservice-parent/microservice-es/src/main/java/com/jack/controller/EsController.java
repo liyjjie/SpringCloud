@@ -135,9 +135,9 @@ public class EsController {
     }
 
     @ApiOperation("根据id查询(多个id)")
-    @ApiImplicitParam(name = "id", value = "ids", required = true, dataType = "String", paramType = "query")
+    @ApiImplicitParam(name = "ids", value = "多个id查询", required = true, dataTypeClass =String.class, paramType = "query")
     @RequestMapping(value = "/getIds", method = RequestMethod.GET)
-    public List<EsInsertReturn> getIds(@RequestParam String[] ids) {
+    public List<EsInsertReturn> getIds(@RequestParam List<String> ids) {
         return esService.getIds(ids);
     }
 }
