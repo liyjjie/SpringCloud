@@ -4,6 +4,7 @@
 */*.iml
 */*/*.iml
 *.iml
+*.class
 out
 gen
 spring-cloud.iml
