@@ -1,6 +1,7 @@
 package com.jack.repo;
 
 import com.google.gson.Gson;
+import com.jack.conf.EsConf;
 import com.jack.es.EsClientFactory;
 import com.jack.utils.exception.ServiceException;
 import com.jack.vo.EsInsertVo;
@@ -9,17 +10,18 @@ import io.searchbox.client.JestResult;
 import io.searchbox.core.*;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
-import org.elasticsearch.index.query.IdsQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +37,9 @@ public class EsRepo implements CommonRepo {
 
     @Resource(name = "EsClientFactory")
     private EsClientFactory esClientFactory;
+
+    @Autowired
+    private EsConf esConf;
 
     //es添加数据
     @Override
@@ -179,6 +184,7 @@ public class EsRepo implements CommonRepo {
 
     /**
      * 对排序字段searchSourceBuilder 在设置keyword的type
+     *
      * @param clazz
      * @param ids
      * @param index
@@ -208,5 +214,63 @@ public class EsRepo implements CommonRepo {
             logger.info("error" + e);
         }
         return null;
+    }
+
+    //should 或
+    @Override
+    public List<Object> getListAll(String index, String type, Class clazz, List<String> searchContents) {
+        JestClient jestClient = esClientFactory.getJestClient();
+        List<Object> list = new ArrayList<>();
+        try {
+            BoolQueryBuilder bool = QueryBuilders.boolQuery();
+            //模糊查询方法
+            FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(EsInsertVo.COL_SEARCHCONTENTS, "书");
+            bool.should(fuzzyQueryBuilder);
+            //should在sql中是or的意思
+            //must在sql中是and的意思
+            for (String temp : searchContents) {
+                bool.should(QueryBuilders.matchQuery(EsInsertVo.COL_SEARCHCONTENTS, temp));
+                bool.minimumShouldMatch();
+            }
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            //sourceBuilder.from在查出的数据中返回第几条 当超出数据时返回null 从0开始
+            //sourceBuilder.size在查出的数据中返回指定的条数
+            //sourceBuilder.timeout设置一个搜索超时时间
+            sourceBuilder.query(bool);
+
+//            sourceBuilder.sort(new FieldSortBuilder(EsInsertVo.COL_SEARCHCONTENTS).order(SortOrder.ASC));
+            Search search = new Search.Builder(sourceBuilder.toString()).addIndex(index).addType(type).build();
+            JestResult jr = jestClient.execute(search);
+            list = jr.getSourceAsObjectList(clazz);
+            if (!jr.isSucceeded()) {
+                logger.info("error");
+            }
+        } catch (Exception e) {
+            logger.info("error es" + e);
+        }
+        return list;
+    }
+
+    public List<Object> getListSortAll(String index,String type,List<String> searchContents,Class clazz){
+        JestClient jestClient=esClientFactory.getJestClient();
+        List<Object> list=new ArrayList<>();
+        try{
+            BoolQueryBuilder bool=QueryBuilders.boolQuery();
+            SearchSourceBuilder searchBuilder=new SearchSourceBuilder();
+            for (String temp: searchContents ) {
+                bool.should(QueryBuilders.matchQuery(EsInsertVo.COL_SEARCHCONTENTS,temp));
+            }
+            searchBuilder.sort(new FieldSortBuilder(EsInsertVo.COL_SEARCHCONTENTS).order(SortOrder.DESC));
+            searchBuilder.query(bool);
+            Search search=new Search.Builder(searchBuilder.toString()).addIndex(esConf.getIndex()).addType(esConf.getType()).build();
+            JestResult jr=jestClient.execute(search);
+            if(!jr.isSucceeded()){
+                logger.info("error es return isSucceeded false");
+            }
+           list=jr.getSourceAsObjectList(clazz);
+        }catch (Exception e){
+            logger.info("error es");
+        }
+        return list;
     }
 }

@@ -20,12 +20,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class EsSwagger {
 
+
+    //RequestHandlerSelectors.basePackage("com.jack.controller")
+    //RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jack"))
+                .apis(RequestHandlerSelectors.basePackage("com.jack.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

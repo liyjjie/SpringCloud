@@ -1,5 +1,10 @@
 package com.jack.service.Impl;
 
+import com.carrotsearch.hppc.LongArrayList;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
 import com.jack.conf.EsConf;
 import com.jack.dao.EsDao;
@@ -8,11 +13,14 @@ import com.jack.repo.CommonRepo;
 import com.jack.service.EsService;
 import com.jack.utils.HibernateUtils;
 import com.jack.utils.hibernate.DataSource;
+import com.jack.utils.jwt.JSONUtils;
 import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
 import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
+import net.sf.json.JSONObject;
 import org.apache.commons.collections.ArrayStack;
+import org.aspectj.lang.annotation.After;
 import org.elasticsearch.common.recycler.Recycler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +38,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EsServiceImpl implements EsService {
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private EsDao esDao;
@@ -102,6 +112,7 @@ public class EsServiceImpl implements EsService {
         return flag;
     }
 
+    @Override
     public List<EsInsertReturn> getIds(List<String> ids) {
         List<Object> list = commonRepo.getIds(EsInsertVo.class, ids, esConf.getIndex(), esConf.getType());
         List<EsInsertVo> result = new ArrayList<>();
@@ -111,4 +122,53 @@ public class EsServiceImpl implements EsService {
         List<EsInsertReturn> resultList = result.stream().map(EsInsertVo::toVo).collect(Collectors.toList());
         return resultList;
     }
+
+    @Override
+    public List<EsInsertReturn> getListAll(List<String> searchContents) {
+        List<Object> list = commonRepo.getListAll(esConf.getIndex(), esConf.getType(), EsInsertVo.class, searchContents);
+        List<EsInsertVo> result = new ArrayList<>();
+        for (Object temp : list) {
+            result.add((EsInsertVo) temp);
+        }
+        List<EsInsertReturn> resultList = result.stream().map(EsInsertVo::toVo).collect(Collectors.toList());
+        return resultList;
+    }
+
+    /**
+     * 针对多层嵌套json字符串使用
+     *
+     * @param json
+     * @param test
+     */
+    @Override
+    public void demo(String json, Map<Long, List<String>> test) {
+        //Map<String, List<Map<Long, String[]>>> specialUseCouponMap = new HashMap<>();
+        //Map<String, Map<Long, List<String>>> result = new HashMap<>();
+        Map<String, List<Map<Long, List<String>>>> specialUseCouponMap = new HashMap<>();
+        try {
+            Map<String, Object> iterator = mapper.readValue(json, Map.class);
+            for (Map.Entry<String, Object> temp : iterator.entrySet()) {
+                List<Map<Long, List<String>>> mapObject = mapper.readValue(JSONUtils.toJSON(temp.getValue()), new TypeReference<List<Map<Long, List>>>() {
+                });
+                Integer count = mapObject.size();
+                specialUseCouponMap.put(temp.getKey(), mapObject);
+                System.out.println(count);
+            }
+//            Map<String,Object> iterator = mapper.readValue(json, Map.class);
+//            for (Map.Entry<String,Object> temp: iterator.entrySet() ) {
+//                Map<Long, List<String>> mapObject = mapper.readValue(JSONUtils.toJSON(temp.getValue()), new TypeReference<Map<Long, List>>() {});
+//                result.put(temp.getKey(),mapObject);
+//            }
+        } catch (Exception e) {
+        }
+    }
+
+    //json字符串转Map,List,Set只针对单独的一层嵌套使用,多层嵌套使用可以使用上面的方法
+    public void jsonTOCollectors(String json) throws Exception {
+        Map<Long, List<String>> result = mapper.readValue(JSONUtils.toJSON(json), mapper.getTypeFactory().constructMapType(HashMap.class, Long.class, List.class));
+        for (Map.Entry<Long, List<String>> temp : result.entrySet()) {
+            System.out.println(temp.getKey() + "--" + temp.getValue().toString());
+        }
+    }
+
 }

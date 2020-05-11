@@ -3,10 +3,7 @@ package com.jack.utils.hibernate;
 import com.jack.utils.log.LogData;
 import com.jack.utils.log.LogMessage;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +16,7 @@ import java.lang.reflect.Method;
  * @author ：liyongjie
  * @ClassName ：DynamicDataSourceAspect
  * @date ： 2019-11-28 09:56
+ * 通过注解的形式在service全部加载之前执行
  * @modified By：
  */
 @Aspect

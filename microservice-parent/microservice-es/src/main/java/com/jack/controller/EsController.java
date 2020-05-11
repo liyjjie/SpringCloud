@@ -2,24 +2,28 @@ package com.jack.controller;
 
 import com.jack.domain.User;
 import com.jack.service.EsService;
+import com.jack.service.Impl.AfterDemo;
 import com.jack.utils.RedisUtils;
+import com.jack.utils.exception.ServiceException;
 import com.jack.utils.execl.ExcelImportParam;
 import com.jack.utils.execl.ExcelImportUtils;
 import com.jack.utils.jwt.AccessToken;
 import com.jack.utils.jwt.AccessTokenJwtUtils;
+import com.jack.utils.jwt.JSONUtils;
 import com.jack.vo.*;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author ：liyongjie
@@ -29,13 +33,18 @@ import java.util.List;
  */
 //es搜索
 @RestController
-@Api(value = "/EsController")
+@RequestMapping("/EsController")
+//@Api(value = "/EsController",description = "es搜索")
 public class EsController {
 
     @Autowired
     private EsService esService;
 
+    @Autowired
+    private AfterDemo afterDemo;
+
     //execl导入数据utils
+    @ApiOperation("数据导入")
     @PostMapping("/demo")
     public void demo(@ApiParam(value = "excel数据文件()", required = true) MultipartFile file) throws Exception {
         List<ExcelImportParam> list = new ArrayList<>(2);
@@ -48,13 +57,15 @@ public class EsController {
     }
 
     //token认证通过jwt获取用户信息，一般字符较长带特殊字符时采用以下方式接收防止数据丢失
-    @PostMapping("/{jwt}/demo")
+    @ApiOperation("jwt转uid")
+    @RequestMapping(name = "/{jwt}/demo",method = RequestMethod.POST)
     public void jwt(@PathVariable("jwt") String jwt) {
         AccessToken accessToken = AccessTokenJwtUtils.dncrypt(jwt);
         System.out.println(accessToken.getUid());
     }
 
     //通过uid获取jwt
+    @ApiOperation("uid转jwt")
     @PostMapping("/{uid}/toJwt")
     public String uidToJwt(@PathVariable("uid") Long uid) {
         AccessToken accessToken = new AccessToken();
@@ -64,8 +75,10 @@ public class EsController {
     }
 
     //连接本地的Redis
+    @ApiOperation("redis测试")
     @PostMapping("/redisConst")
     public void redisConst() {
+        afterDemo.access();
         JedisPool jedisPool = RedisUtils.getJedisPool("order");
         try (Jedis jedis = jedisPool.getResource()) {
             String value = jedis.get("inv_1_1");
@@ -140,4 +153,46 @@ public class EsController {
     public List<EsInsertReturn> getIds(@RequestParam List<String> ids) {
         return esService.getIds(ids);
     }
+
+    @ApiOperation("对es复杂查询 排序(排序要配置type是否允许排序)")
+    @GetMapping("/getListAll")
+    @ApiImplicitParam(name = "/getListAll",value = "排序",required = true,dataTypeClass = String.class,paramType = "query")
+    public List<EsInsertReturn> getListAll(@RequestParam List<String> searchContents){
+       return esService.getListAll(searchContents);
+    }
+
+//    @ApiOperation("json")
+//    @GetMapping("/demo")
+    //json转Map<String,List<Map<Long,List<String>>>>
+    public String demo(){
+//        Map<String, Map<Long, List<String>>> specialUseCouponMap = new HashMap<>();
+        Map<String, List<Map<Long, List<String>>>> specialUseCouponMap = new HashMap<>();
+        Map<Long,List<String>> listMap=new HashMap<>();
+        List<String> str=new ArrayList<>();
+        str.add("张");
+        str.add("王");
+        for (int i = 0; i <2; i++) {
+            listMap.put(Long.valueOf(i),str);
+        }
+        List<Map<Long, List<String>>> count=new ArrayList<>();
+        for(int i=0;i<3;i++){
+            count.add(listMap);
+        }
+        for (int i = 0; i <2 ; i++) {
+          String uuid=UUID.randomUUID().toString();
+            specialUseCouponMap.put(uuid.substring(0,4),count);
+        }
+        String json="";
+        try{
+         json= JSONUtils.toJSON(specialUseCouponMap);
+            System.out.println(json);
+        }catch (Exception e){
+            System.err.println("error"+e);
+        }
+        esService.demo(json,listMap);
+       return json;
+    }
+
+
+
 }

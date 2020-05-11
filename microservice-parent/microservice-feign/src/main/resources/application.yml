@@ -37,6 +37,6 @@ eureka:
     service-url:
       defaultZone: http://eureka9003.com:9003/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9001.com:9001/eureka/
     instance:
-      instance-id: microservice-hibernate10092             #自定义服务名称信息
+      instance-id: microservice-feign10092             #自定义服务名称信息
       prefer-ip-address: true
       status-page-url: http://localhost:${server.port}/swagger-ui.html  #指定eurka注册改服务的访问地址(swagger地址)

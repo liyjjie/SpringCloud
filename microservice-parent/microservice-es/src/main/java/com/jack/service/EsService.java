@@ -7,6 +7,7 @@ import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ：liyongjie
@@ -35,4 +36,9 @@ public interface EsService {
     Boolean create(String index);
 
     List<EsInsertReturn> getIds(List<String> ids);
+
+    List<EsInsertReturn> getListAll(List<String> searchContents);
+
+    void  demo(String json, Map<Long,List<String>> test);
+
 }
