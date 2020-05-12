@@ -5,6 +5,8 @@
 */*/*.iml
 *.iml
 *.class
+.gitignore
+.classpath
 out
 gen
 spring-cloud.iml
