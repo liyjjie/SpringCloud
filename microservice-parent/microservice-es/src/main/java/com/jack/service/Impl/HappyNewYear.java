@@ -39,7 +39,7 @@ public class HappyNewYear implements ApplicationRunner {
     public void run(ApplicationArguments applicationArguments) throws Exception {
         try {
             LocalDate nowData = getLocalDateFromDate(new Date());
-            String startData = "2020-01-24";
+            String startData = "2021-02-12";
             SimpleDateFormat sdf = new SimpleDateFormat(yyyyMMdd);
             Date date = sdf.parse(startData);
             LocalDate data = getLocalDateFromDate(date);
