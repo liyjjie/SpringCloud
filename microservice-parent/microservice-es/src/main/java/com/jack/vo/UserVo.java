@@ -1,6 +1,8 @@
 package com.jack.vo;
 
 import com.jack.domain.User;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author ：liyongjie
@@ -8,11 +10,13 @@ import com.jack.domain.User;
  * @date ： 2019-12-09 16:19
  * @modified By：
  */
+@ApiModel(value = "UserVo",description = "用户信息")
 public class UserVo {
 
-
+    @ApiModelProperty(value = "用户名")
     private String name;
 
+    @ApiModelProperty(value = "年龄")
     private Integer age;
 
     public String getName() {
