@@ -25,7 +25,7 @@ import java.util.List;
 public class HibernateUtils {
 
     @Autowired
-    @Qualifier("sessionFactory")
+    @Qualifier("sessionFactory")//注入的是HibernateConfiguration下的sessionFactory()
     private SessionFactory sessionFactory;
 
 

@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Table(name = "t_address")
 public class Address implements Serializable {
 
+    private static final long serialVersionUID = 812931649234361503L;
+
     private int id;
 
     private String address;

@@ -7,7 +7,7 @@ import java.util.List;
  * @author ：liyongjie
  * @ClassName ：CollectsUtils
  * @date ： 2019-10-22 14:16
- * @modified By：
+ * @modified By： 工具类对数据进行拆分(适合多线程跑数据)
  */
 public class CollectsUtils {
 

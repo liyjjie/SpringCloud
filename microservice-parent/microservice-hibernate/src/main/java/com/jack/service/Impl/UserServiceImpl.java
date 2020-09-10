@@ -5,14 +5,17 @@ import com.jack.entity.Address;
 import com.jack.entity.Order;
 import com.jack.entity.User;
 import com.jack.service.UserService;
+import com.jack.utils.CollectsUtils;
 import com.jack.vo.AddressVo;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author ：liyongjie
@@ -21,7 +24,22 @@ import java.util.Set;
  * @modified By：
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService , ApplicationContextAware {
+    private Map<String,AddressVo> map;
+
+    //在service执行完之后执行
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        map=applicationContext.getBeansOfType(AddressVo.class);
+        System.out.println(map);
+    }
+
+    //最先执行的方法 测试方法也会被执行
+    static {
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("1", "2");
+        System.out.println(map1.get("1"));
+    }
 
     @Autowired
     private HibernateUtils hibernateUtils;

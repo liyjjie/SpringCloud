@@ -34,7 +34,7 @@ eureka:
   client:
     service-url:
       #defaultZone: http://localhost:9001/eureka
-      defaultZone: http://eureka9001.com:9001/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9003.com:9003/eureka/
+      defaultZone: http://eureka9003.com:9003/eureka/
   instance:
     instance-id: microservice-hibernate10090              #自定义服务名称信息
     prefer-ip-address: true

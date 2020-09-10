@@ -47,7 +47,7 @@ public class HibernateConfiguration {
     private String PACKAGES_TO_SCAN;
 
     /**
-     * @return
+     * @return 2
      */
     @Bean(value = "sessionFactory")
     public LocalSessionFactoryBean sessionFactory() {
@@ -64,7 +64,7 @@ public class HibernateConfiguration {
     }
 
     /**
-     * @return
+     * @return 1
      */
     @Bean
     public DataSource dataSource() {
