@@ -163,8 +163,8 @@ public class EsController {
        return esService.getListAll(searchContents);
     }
 
-//    @ApiOperation("json")
-//    @GetMapping("/demo")
+    @ApiOperation("json")
+    @GetMapping(value = "/demo")
     //json转Map<String,List<Map<Long,List<String>>>>
     public String demo(){
 //        Map<String, Map<Long, List<String>>> specialUseCouponMap = new HashMap<>();

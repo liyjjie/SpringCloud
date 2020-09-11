@@ -20,8 +20,11 @@ import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.ArrayStack;
+import org.apache.poi.util.StringUtil;
 import org.aspectj.lang.annotation.After;
 import org.elasticsearch.common.recycler.Recycler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +41,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EsServiceImpl implements EsService {
+
+    private static final Logger logger= LoggerFactory.getLogger(EsServiceImpl.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -160,6 +165,8 @@ public class EsServiceImpl implements EsService {
 //                result.put(temp.getKey(),mapObject);
 //            }
         } catch (Exception e) {
+            //logger 方便记录数据
+            logger.error(String.format("调用红包迁移服务异常,旧 userid：%s,新 userid：%s,res：%s", 123, "dasdasd", "dsafasfsafw"));
         }
     }
 
