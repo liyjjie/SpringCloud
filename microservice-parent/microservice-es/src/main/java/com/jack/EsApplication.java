@@ -25,6 +25,7 @@ public class EsApplication {
         SpringApplication.run(EsApplication.class,args);
     }
 
+    //name 指定的类名称 initMethod 指定类里的方法名称
     @Bean(name = "EsClientFactory",initMethod = "connect")
     public EsClientFactory esClientFactory(){
         return new EsClientFactory();
