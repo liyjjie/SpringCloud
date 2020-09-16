@@ -198,7 +198,6 @@ public class EsController {
     @ApiOperation(value = "es取出所有数据")
     @GetMapping(value = "/getAll")
     public void getAll(){
-        esService.getAll();
     }
 
 
