@@ -139,6 +139,11 @@ public class EsServiceImpl implements EsService {
         return resultList;
     }
 
+    @Override
+    public void getAll(){
+        commonRepo.getAll();
+    }
+
     /**
      * 针对多层嵌套json字符串使用
      *

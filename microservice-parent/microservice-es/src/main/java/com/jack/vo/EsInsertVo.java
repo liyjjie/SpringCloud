@@ -23,6 +23,8 @@ public class EsInsertVo implements Serializable {
     private Long createDate;
 
     public static final String COL_SEARCHCONTENTS="searchContents";
+    public static final String COL_USER_ID="userId";
+    public static final String COL_CREATE_DATE="createDate";
 
     public Long getId() {
         return id;

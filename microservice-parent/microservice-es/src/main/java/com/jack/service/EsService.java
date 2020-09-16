@@ -41,4 +41,6 @@ public interface EsService {
 
     void  demo(String json, Map<Long,List<String>> test);
 
+    void getAll();
+
 }

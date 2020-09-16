@@ -10,6 +10,8 @@ import io.searchbox.client.JestResult;
 import io.searchbox.core.*;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.index.engine.Engine;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
@@ -18,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import redis.clients.jedis.Client;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Type;
@@ -214,6 +217,14 @@ public class EsRepo implements CommonRepo {
             logger.info("error" + e);
         }
         return null;
+    }
+
+    public void getAll() {
+        JestClient jestClient = esClientFactory.getJestClient();
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        BoolQueryBuilder bool = QueryBuilders.boolQuery();
+        bool.should();
+        searchSourceBuilder.query();
     }
 
     //should 或
