@@ -194,12 +194,4 @@ public class EsController {
         esService.demo(json,listMap);
        return json;
     }
-
-    @ApiOperation(value = "es取出所有数据")
-    @GetMapping(value = "/getAll")
-    public void getAll(){
-    }
-
-
-
 }

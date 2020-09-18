@@ -219,14 +219,6 @@ public class EsRepo implements CommonRepo {
         return null;
     }
 
-    public void getAll() {
-        JestClient jestClient = esClientFactory.getJestClient();
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        BoolQueryBuilder bool = QueryBuilders.boolQuery();
-        bool.should();
-        searchSourceBuilder.query();
-    }
-
     //should 或
     @Override
     public List<Object> getListAll(String index, String type, Class clazz, List<String> searchContents) {
