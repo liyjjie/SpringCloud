@@ -2,6 +2,7 @@ server:
   port: 10080
 
 #尽量遵守 使用注解@DataSource 默认为false(默认走主库master写操作) 为true时走从库slave(读操作)
+#但要确保主库和从库的数据一致 防止修改主库 但从库数据未同步的问题
 spring:
   datasource:
     initialize: false
@@ -112,7 +113,7 @@ eureka:
     register-with-eureka: true #是否被eureka注册到
     service-url:
       #http://eureka9001.com:9001/eureka/,http://eureka9002.com:9002/eureka/
-      defaultZone: http://eureka9003.com:9003/eureka/
+      defaultZone: http://eureka9001.com:9001/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9003.com:9003/eureka/
   instance:
     instance-id: microservice-es10080            #自定义服务名称信息
     prefer-ip-address: true
