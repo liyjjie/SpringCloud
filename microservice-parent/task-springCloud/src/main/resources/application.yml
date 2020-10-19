@@ -1,6 +1,3 @@
-server:
-  port: 8003
-
 mybatis:
   config-location: "classpath:mybatis/mybatis.cfg.xml"        # mybatis配置文件所在路径
   mapper-locations:
@@ -10,11 +7,11 @@ mybatis:
 
 spring:
   application:
-    name: microservice-provider                        #微服务的名字
+    name: task-springCloud                          #微服务的名字
   datasource:
     driver-class-name: org.gjt.mm.mysql.Driver                # mysql驱动包
     type: com.alibaba.druid.pool.DruidDataSource              # 当前数据源操作类型
-    url: "jdbc:mysql://localhost:3306/custom?useUnicode=true&characterEncoding=utf-8&useSSL=false"  # 数据库名称不允许 在连接数据库时放开对ssl的要求
+    url: "jdbc:mysql://localhost:3306/custom?useSSL=false"                    # 数据库名称
     username: root
     password: root
     dbcp2:
@@ -23,21 +20,12 @@ spring:
       max-wait-millis: 200                                    # 等待连接获取的最大超时时间
       min-idle: 5                                             # 数据库连接池的最小维持连接数
 
-logging:
-  level:
-    com.example.demo.mapper: debug
 
-eureka:
-  client:
-    service-url:
-      #defaultZone: http://localhost:9001/eureka
-      defaultZone: http://eureka9001.com:9001/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9003.com:9003/eureka/
-  instance:
-    instance-id: microservice-provider8003               #自定义服务名称信息
-    prefer-ip-address: true                                   #访问路径可以显示IP地址
 
-info:
-  app.name: microservice-provider2
-  company.name: www.liyongjie.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+instance:
+  instance-id: task-springCloud              #自定义服务名称信息
+  prefer-ip-address: true
+
+#实现CommandLineRunner接口 TaskSync1 最先执行
+#实现DisposableBean,Runnable接口TaskSync 后执行
+#TaskSync2定时任务最后执行

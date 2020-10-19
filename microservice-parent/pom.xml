@@ -23,6 +23,7 @@
         <module>microservice-swagger</module>
         <module>microservice-feign</module>
         <module>microservice-es</module>
+        <module>task-springCloud</module>
     </modules>
 
 

@@ -1,6 +1,9 @@
 package com.jack.service;
 
 import com.jack.entity.User;
+import com.jack.vo.AdressEndUserVo;
+import com.jack.vo.OrderVo;
+import com.jack.vo.PasswordVo;
 
 import java.util.List;
 
@@ -17,4 +20,10 @@ public interface UserService {
     User getUser(int id);
 
     List<User> getUsers();
+
+    List<AdressEndUserVo> getAll();
+
+    List<OrderVo> getOrderAll();
+
+    void passwordInsert(List<PasswordVo> list);
 }

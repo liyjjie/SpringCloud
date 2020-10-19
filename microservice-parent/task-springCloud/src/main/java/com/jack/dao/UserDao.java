@@ -1,8 +1,6 @@
 package com.jack.dao;
 
 import com.jack.entity.User;
-import com.jack.vo.AdressEndUserVo;
-import com.jack.vo.OrderVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.List;
 /**
  * @author ：liyongjie
  * @ClassName ：UserDao
- * @date ： 2019-10-15 16:08
+ * @date ： 2019-10-16 09:08
  * @modified By：
  */
 @Mapper
@@ -21,8 +19,4 @@ public interface UserDao {
     User getUser(int id);
 
     List<User> getUsers();
-
-    List<AdressEndUserVo> getAll();
-
-    List<OrderVo> getOrderAll();
 }

@@ -1,8 +1,12 @@
 package com.jack.service.Impl;
 
+import com.jack.dao.PasswordDao;
 import com.jack.dao.UserDao;
 import com.jack.entity.User;
 import com.jack.service.UserService;
+import com.jack.vo.AdressEndUserVo;
+import com.jack.vo.OrderVo;
+import com.jack.vo.PasswordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private PasswordDao passwordDao;
 
     @Override
     public boolean addUser(User user) {
@@ -40,5 +47,20 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsers() {
         List<User> users = userDao.getUsers();
         return users;
+    }
+
+    @Override
+    public List<AdressEndUserVo> getAll(){
+       return userDao.getAll();
+    }
+
+    @Override
+    public List<OrderVo> getOrderAll(){
+        return userDao.getOrderAll();
+    }
+
+    @Override
+    public void passwordInsert(List<PasswordVo> list){
+        passwordDao.passwordInsert(list);
     }
 }
