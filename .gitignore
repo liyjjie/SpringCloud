@@ -5,7 +5,6 @@
 */*/*.iml
 *.iml
 *.class
-.gitignore
 .classpath
 out
 gen
