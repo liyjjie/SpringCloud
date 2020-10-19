@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.dao.UserDao">
-
+    <!--一对多查询-->
     <resultMap id="resultPostMap" type="com.jack.vo.AdressEndUserVo">
         <result property="id" column="id"/>
         <result property="address" column="address"/>
@@ -14,15 +14,16 @@
         </association>
     </resultMap>
 
+    <!--一对一查询-->
     <resultMap id="resultMap" type="com.jack.vo.OrderVo">
         <result property="id" column="id"/>
-        <result property="orderCode" column="order_code" />
-        <result property="address" column="address" />
-        <result property="sync" column="sync" />
+        <result property="orderCode" column="order_code"/>
+        <result property="address" column="address"/>
+        <result property="sync" column="sync"/>
         <collection property="goodDetails" ofType="com.jack.vo.GoodDetail">
-            <result property="id" column="order_id" />
-            <result property="skuCode" column="sku_code" />
-            <result property="qty" column="qty" />
+            <result property="id" column="order_id"/>
+            <result property="skuCode" column="sku_code"/>
+            <result property="qty" column="qty"/>
         </collection>
     </resultMap>
 
@@ -34,9 +35,12 @@
     	select * from t_user
     </select>
 
-    <insert id="addUser" parameterType="User">
-    	insert into t_user(NAME, AGE) values(#{name}, #{age})
-    </insert>
+    <!--解决重复的问题 在存在的数据根据唯一标识进行修改-->
+    <update id="addUser" parameterType="User">
+    	insert into t_user(id,name, age) values(#{id}, #{name}, #{age})
+    	ON DUPLICATE KEY UPDATE
+    	name = values(name),age= values(age)
+    </update>
 
     <select id="getAll" resultMap="resultPostMap" parameterType="int">
         select a.*,u.* from t_address a,t_user u where a.user_id=u.id;

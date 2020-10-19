@@ -29,10 +29,8 @@ public class UserServiceImpl implements UserService {
     private PasswordDao passwordDao;
 
     @Override
-    public boolean addUser(User user) {
-        boolean flag;
-        flag = userDao.addUser(user);
-        return flag;
+    public Boolean addUser(User user) {
+       return userDao.addUser(user);
     }
 
     @Override

@@ -31,9 +31,8 @@ public class UserController {
 
     @ApiOperation(value = "添加数据")
     @PostMapping(value="/add")
-    public boolean addUser(@RequestBody User user){
-        boolean flag = service.addUser(user);
-        return flag;
+    public Boolean addUser(@RequestBody User user){
+       return service.addUser(user);
     }
 
     @ApiOperation(value = "根据id获取数据")

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    boolean addUser(User user);
+    Boolean addUser(User user);
 
     User getUser(int id);
 
