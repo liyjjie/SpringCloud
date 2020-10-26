@@ -7,6 +7,8 @@
         <setting name="cacheEnabled" value="true"/>
         <!--mybatis中sql在控制台打印-->
         <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--开启驼峰命名-->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
 
 </configuration>

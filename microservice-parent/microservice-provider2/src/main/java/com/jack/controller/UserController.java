@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,50 +27,50 @@ public class UserController {
     @Value("${spring.application.name}")
     private String demo;
 
-    @Autowired
-    private UserService service;
+    @Resource
+    private UserService userService;
 
     @ApiOperation(value = "添加数据")
     @PostMapping(value="/add")
     public Boolean addUser(@RequestBody User user){
-       return service.addUser(user);
+       return userService.addUser(user);
     }
 
     @ApiOperation(value = "根据id获取数据")
     @GetMapping(value="/get/{id}")
     public User getUser(@PathVariable("id") int id){
-        User user = service.getUser(id);
+        User user = userService.getUser(id);
         return user;
     }
 
     @ApiOperation(value = "返回所有数据")
     @GetMapping(value="/getUser/list")
     public List<User> getUsers(){
-        List<User> users = service.getUsers();
+        List<User> users = userService.getUsers();
         return users;
-    }
-
-    @ApiOperation(value = "测试")
-    @GetMapping("/demo")
-    public void demo(){
-        System.out.println(demo);
     }
 
     @ApiOperation(value = "获取数据")
     @GetMapping(value = "/all")
     public List<AdressEndUserVo> all(){
-      return  service.getAll();
+      return  userService.getAll();
     }
 
     @ApiOperation(value = "订单数据")
     @GetMapping(value = "/orderAll")
     public List<OrderVo> orderAll(){
-        return service.getOrderAll();
+        return userService.getOrderAll();
     }
 
     @ApiOperation(value = "批量导入数据")
     @PostMapping(value = "/passwordInsert")
     public void passwordInsert(@RequestBody @Valid List<PasswordVo> list){
-        service.passwordInsert(list);
+        userService.passwordInsert(list);
+    }
+
+    @ApiOperation(value = "数据处理")
+    @PostMapping(value = "/demoInsert")
+    public void demoInsert(@RequestBody OrderVo orderVo){
+        userService.insertDemo(orderVo);
     }
 }

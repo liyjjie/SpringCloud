@@ -26,4 +26,6 @@ public interface UserService {
     List<OrderVo> getOrderAll();
 
     void passwordInsert(List<PasswordVo> list);
+
+    void insertDemo(OrderVo orderVo);
 }

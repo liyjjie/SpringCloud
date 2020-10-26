@@ -25,4 +25,6 @@ public interface UserDao {
     List<AdressEndUserVo> getAll();
 
     List<OrderVo> getOrderAll();
+
+    void insertDemo(OrderVo orderVo);
 }

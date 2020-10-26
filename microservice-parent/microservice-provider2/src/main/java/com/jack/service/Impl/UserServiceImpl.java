@@ -9,6 +9,7 @@ import com.jack.vo.OrderVo;
 import com.jack.vo.PasswordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -60,5 +61,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void passwordInsert(List<PasswordVo> list){
         passwordDao.passwordInsert(list);
+    }
+
+    @Override
+    @Transactional
+    public void insertDemo(OrderVo orderVo){
+        userDao.insertDemo(orderVo);
     }
 }

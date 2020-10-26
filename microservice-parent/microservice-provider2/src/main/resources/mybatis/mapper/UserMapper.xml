@@ -50,8 +50,42 @@
         select * from t_order o,t_good_detail g where o.id=g.order_id;
     </select>
 
-    <update id="insertDemo">
+    <insert id="insertDemo" parameterType="com.jack.vo.OrderVo">
+BEGIN
+        delete from t_order where id=1;
 
-    </update>
+        insert into t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="sync != null">
+                sync,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="sync != null">
+                #{sync},
+            </if>
+        </trim>
+;
+
+END;
+        <!--<if test="goodDetails != null and goodDetails.size>0">-->
+            <!--insert into t_good_detail (id,sku_code,order_id,qty) values-->
+            <!--<foreach collection="goodDetails" item="item" index="index" separator=",">-->
+                <!--(#{item.id},#{item.skuCode},#{id},#{item.qty})-->
+            <!--</foreach>-->
+        <!--</if>-->
+    </insert>
 
 </mapper>

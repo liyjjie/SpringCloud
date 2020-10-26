@@ -8,9 +8,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,12 +24,12 @@ public class ControllerFeign {
     @Autowired
     private MicService micService;
 
-    @RequestMapping("/getUserAll")
+    @PostMapping(value = "/getUserAll")
     public List<User> getUserAll(){
        return micService.getUserAll();
     }
 
-    @RequestMapping("/getUserById/{id}")
+    @GetMapping("/getUserById/{id}")
     public User getUserById(@PathVariable("id") int id){
         return micService.getById(id);
     }
@@ -39,7 +37,7 @@ public class ControllerFeign {
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
     @ApiImplicitParams(
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer"))
-    @RequestMapping("/getUserId/{id}")
+    @GetMapping("/getUserId/{id}")
     public UserEntity getUserId(@PathVariable("id") int id){
         return micService.getUserById(id);
     }
