@@ -1,0 +1,31 @@
+mybatis:
+  config-location: "classpath:mybatis/mybatis.cfg.xml"        # mybatis配置文件所在路径
+  mapper-locations:
+    - "classpath:mybatis/mapper/**/*.xml"                     # mapper映射文件
+  type-aliases-package: com.jack.entity            # 别名类所在包
+
+
+spring:
+  application:
+    name: task-springCloud                          #微服务的名字
+  datasource:
+    driver-class-name: org.gjt.mm.mysql.Driver                # mysql驱动包
+    type: com.alibaba.druid.pool.DruidDataSource              # 当前数据源操作类型
+    url: "jdbc:mysql://localhost:3306/custom?useSSL=false"                    # 数据库名称
+    username: root
+    password: root
+    dbcp2:
+      initial-size: 5                                         # 初始化连接数
+      max-total: 5                                            # 最大连接数
+      max-wait-millis: 200                                    # 等待连接获取的最大超时时间
+      min-idle: 5                                             # 数据库连接池的最小维持连接数
+
+
+
+instance:
+  instance-id: task-springCloud              #自定义服务名称信息
+  prefer-ip-address: true
+
+#实现CommandLineRunner接口 TaskSync1 最先执行
+#实现DisposableBean,Runnable接口TaskSync 后执行
+#TaskSync2定时任务最后执行

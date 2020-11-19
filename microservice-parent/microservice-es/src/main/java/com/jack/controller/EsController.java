@@ -2,9 +2,7 @@ package com.jack.controller;
 
 import com.jack.domain.User;
 import com.jack.service.EsService;
-import com.jack.service.Impl.AfterDemo;
 import com.jack.utils.RedisUtils;
-import com.jack.utils.exception.ServiceException;
 import com.jack.utils.execl.ExcelImportParam;
 import com.jack.utils.execl.ExcelImportUtils;
 import com.jack.utils.jwt.AccessToken;
@@ -14,9 +12,6 @@ import com.jack.vo.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,9 +34,6 @@ public class EsController {
 
     @Autowired
     private EsService esService;
-
-    @Autowired
-    private AfterDemo afterDemo;
 
     //execl导入数据utils
     @ApiOperation(value = "数据导入")
@@ -66,7 +58,7 @@ public class EsController {
     }
 
     //通过uid获取jwt
-    @ApiOperation("uid转jwt")
+    @ApiOperation(value = "uid转jwt")
     @PostMapping(value = "/{uid}/toJwt")
     public String uidToJwt(@PathVariable("uid") Long uid) {
         AccessToken accessToken = new AccessToken();
@@ -76,10 +68,9 @@ public class EsController {
     }
 
     //连接本地的Redis
-    @ApiOperation("redis测试")
+    @ApiOperation(value = "redis测试")
     @PostMapping(value = "/redisConst")
     public String redisConst() {
-        afterDemo.access();
         JedisPool jedisPool = RedisUtils.getJedisPool("order");
         String str;
         try (Jedis jedis = jedisPool.getResource()) {
@@ -88,27 +79,27 @@ public class EsController {
         return str;
     }
 
-    @ApiOperation("根据id查询数据(查询主库)测试")
+    @ApiOperation(value = "根据id查询数据(查询主库)测试")
     @GetMapping(value = "/userHibernateUtilsById/{id}")
     public User userHibernateUtilsById(@PathVariable("id") Long id) {
         User user = esService.userById(id);
         return user;
     }
 
-    @ApiOperation("测试主从库(添加从库)测试")
+    @ApiOperation(value = "测试主从库(添加从库)测试")
     @GetMapping(value = "/saveUser")
     public void saveUser(@RequestBody UserVo vo) {
         esService.saveUser(vo);
     }
 
     //es操作
-    @ApiOperation("es添加数据")
+    @ApiOperation(value = "es添加数据")
     @PostMapping(value = "/EsInsert")
     public void EsInsert(@RequestBody EsInsertVo esInsertVo) {
         esService.EsInsert(esInsertVo);
     }
 
-    @ApiOperation("es查询数据")
+    @ApiOperation(value = "es查询数据")
     @GetMapping(value = "/getEs/{id}")
     public EsInsertReturn getEs(@PathVariable("id") String id) {
         EsInsertReturn esInsertReturn = esService.getEs(id);
@@ -116,54 +107,54 @@ public class EsController {
         return esInsertReturn;
     }
 
-    @ApiOperation("es修改数据/添加数据")
+    @ApiOperation(value = "es修改数据/添加数据")
     @PostMapping(value = "/updateOrInsertEs")
     public Boolean updateOrInsertEs(@RequestBody EsInsertReturn esInsertReturn) {
         Boolean flag = esService.updateOrInsertEs(esInsertReturn);
         return flag;
     }
 
-    @ApiOperation("es修改数据")
+    @ApiOperation(value = "es修改数据")
     @PostMapping(value = "/update")
     public Boolean update(@RequestBody EsUpdateVo esUpdateVo) {
         return esService.update(esUpdateVo);
     }
 
-    @ApiOperation("es删除数据(清空文档)")
+    @ApiOperation(value = "es删除数据(清空文档)")
     @DeleteMapping(value = "/deleteEs/{id}")
     public Boolean deleteEs(@PathVariable("id") String id) {
         Boolean flag = esService.deleteEs(id);
         return flag;
     }
 
-    @ApiOperation("es删除索引")
+    @ApiOperation(value = "es删除索引")
     @DeleteMapping(value = "/deleteIndex/{index}")
     public Boolean deleteIndex(@PathVariable("index") String index) {
         Boolean flag = esService.deleteIndex(index);
         return flag;
     }
 
-    @ApiOperation("添加索引")
+    @ApiOperation(value = "添加索引")
     @GetMapping(value = "/create/{index}")
     public Boolean create(@PathVariable("index") String index) {
         return esService.create(index);
     }
 
-    @ApiOperation("根据id查询(多个id)")
+    @ApiOperation(value = "根据id查询(多个id)")
     @ApiImplicitParam(name = "ids", value = "多个id查询", required = true, dataTypeClass =String.class, paramType = "query")
     @RequestMapping(value = "/getIds", method = RequestMethod.GET)
     public List<EsInsertReturn> getIds(@RequestParam List<String> ids) {
         return esService.getIds(ids);
     }
 
-    @ApiOperation("对es复杂查询 排序(排序要配置type是否允许排序)")
+    @ApiOperation(value = "对es复杂查询 排序(排序要配置type是否允许排序)")
     @GetMapping(value = "/getListAll")
     @ApiImplicitParam(name = "/getListAll",value = "排序",required = true,dataTypeClass = String.class,paramType = "query")
     public List<EsInsertReturn> getListAll(@RequestParam List<String> searchContents){
        return esService.getListAll(searchContents);
     }
 
-    @ApiOperation("json")
+    @ApiOperation(value = "json")
     @GetMapping(value = "/demo")
     //json转Map<String,List<Map<Long,List<String>>>>
     public String demo(){

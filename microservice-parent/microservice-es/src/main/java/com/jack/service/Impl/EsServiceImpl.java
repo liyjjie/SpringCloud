@@ -1,10 +1,7 @@
 package com.jack.service.Impl;
 
-import com.carrotsearch.hppc.LongArrayList;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
 import com.jack.conf.EsConf;
 import com.jack.dao.EsDao;
@@ -18,11 +15,6 @@ import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
 import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
-import net.sf.json.JSONObject;
-import org.apache.commons.collections.ArrayStack;
-import org.apache.poi.util.StringUtil;
-import org.aspectj.lang.annotation.After;
-import org.elasticsearch.common.recycler.Recycler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,7 +158,7 @@ public class EsServiceImpl implements EsService {
 //            }
         } catch (Exception e) {
             //logger 方便记录数据
-            logger.error(String.format("调用红包迁移服务异常,旧 userid：%s,新 userid：%s,res：%s", 123, "dasdasd", "dsafasfsafw"));
+            logger.error(String.format("日志打印,旧 userid：%s,新 userid：%s,res：%s", 123, "dasdasd", "dsafasfsafw"));
         }
     }
 
