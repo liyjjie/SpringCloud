@@ -128,3 +128,5 @@ microservice-provider-hystrix/target/classes/
 microservice-provider-hystrix/target/maven-archiver/
 microservice-provider-hystrix/target/maven-status/
 microservice-provider-hystrix/target/microservicecloud.jar
+microservice-parent/task-springCloud/src/test/
+microservice-parent/task-springCloud/target/generated-sources/
