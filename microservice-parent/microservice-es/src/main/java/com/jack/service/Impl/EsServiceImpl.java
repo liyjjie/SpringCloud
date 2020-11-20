@@ -178,4 +178,30 @@ public class EsServiceImpl implements EsService {
         }
     }
 
+    /**
+     * 弹珠落地到弹起的距离
+     * @param integer 第几次落地
+     * @param mi 多少米
+     * @return
+     */
+    public Double marblesUtils(Integer integer, Double mi) {
+        Double sum = 0d;
+        Double d = 100d;
+        if (integer <= 1 && integer > 0) {
+            return sum = mi;
+        } else {
+            for (int i = 1; i <= integer; i++) {
+                if (i == 1) {
+                    sum = mi;
+                    continue;
+                }
+                d = Double.valueOf(d / 2);
+                sum = sum + d * 2;
+                if (integer == i) {
+                    sum = sum - d;
+                }
+            }
+        }
+        return sum;
+    }
 }

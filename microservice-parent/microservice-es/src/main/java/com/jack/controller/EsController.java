@@ -194,4 +194,10 @@ public class EsController {
         esService.demo(json,listMap);
        return json;
     }
+
+    @ApiOperation(value = "流处理工具类")
+    @PostMapping(value = "/streamUtils")
+    public void streamUtils(){
+
+    }
 }
