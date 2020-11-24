@@ -252,4 +252,34 @@ public class EsServiceImpl implements EsService {
         }
         return res.toString();
     }
+
+    /**
+     * 给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        List<Integer> list = new ArrayList<>();
+        while (true) {
+            if (head.next != null) {
+                list.add(head.val);
+            } else if (Integer.valueOf(head.val) != null) {
+                list.add(head.val);
+                break;
+            } else {
+                break;
+            }
+            head = head.next;
+        }
+        if(list.size()>=n){
+            list.remove(list.size()-n);
+        }
+        ListNode listNode = null;
+        for (int i = list.size(); i > 0; i--) {
+            if (i == list.size()) {
+                listNode = new ListNode(list.get(i-1));
+            } else {
+                listNode = new ListNode(list.get(i-1), listNode);
+            }
+        }
+        return listNode;
+    }
 }

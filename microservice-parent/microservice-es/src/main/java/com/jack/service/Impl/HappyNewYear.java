@@ -41,13 +41,15 @@ public class HappyNewYear implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
         try {
-            LocalDate nowData = getLocalDateFromDate(new Date());
-            String startData = "2021-02-12";
+//            LocalDate nowData = getLocalDateFromDate(new Date());
+//            String startData = "2021-02-12";
             SimpleDateFormat sdf = new SimpleDateFormat(yyyyMMdd);
-            Date date = sdf.parse(startData);
-            LocalDate data = getLocalDateFromDate(date);
-            long between = ChronoUnit.DAYS.between(nowData, data);
-            System.err.println("距新年还有" + between + "天");
+//            Date date = sdf.parse(startData);
+//            LocalDate data = getLocalDateFromDate(date);
+//            long between = ChronoUnit.DAYS.between(nowData, data);
+            Date date = new Date();
+            List<Date> list = getWorkTimeSumInSection(sdf.format(date), "2021-02-12");
+            System.err.println("距新年工作日还有" + (list.size() - 1) + "天");
         } catch (Exception e) {
             logger.info("error" + e);
         }
