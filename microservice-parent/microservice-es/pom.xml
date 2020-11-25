@@ -143,9 +143,15 @@
             <version>6.1.2</version>
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
+=======
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>compile</scope>
+>>>>>>> master
         </dependency>
     </dependencies>
 </project>

@@ -15,6 +15,7 @@ import com.jack.vo.EsInsertReturn;
 import com.jack.vo.EsInsertVo;
 import com.jack.vo.EsUpdateVo;
 import com.jack.vo.UserVo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 @Service
 public class EsServiceImpl implements EsService {
 
-    private static final Logger logger= LoggerFactory.getLogger(EsServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(EsServiceImpl.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -170,4 +171,105 @@ public class EsServiceImpl implements EsService {
         }
     }
 
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
+    /**
+     * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+     * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+     * 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private static ListNode recursive1(ListNode l1, ListNode l2, int carry) {
+        if (l1 == null && l2 == null && carry == 0) {   // 递归结束条件
+            return null;
+        }
+        int l1Val = l1 == null ? 0 : l1.val;
+        int l2Val = l2 == null ? 0 : l2.val;
+        int curSum = l1Val + l2Val + carry;
+        ListNode curNode = new ListNode(curSum % 10);
+        curNode.next = recursive1(l1 == null ? null : l1.next, l2 == null ? null : l2.next, curSum / 10);
+        return curNode;
+    }
+
+    public static ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        return recursive1(l1, l2, 0);
+    }
+
+    /**
+     *无法转成数值类型的数据进行相加utils(如"1000000000000000000000000000001"与"234")
+     * @param a
+     * @param b
+     * @return
+     */
+    public static String bigNumberPlus(String a, String b) {
+        int lenA = a.length();
+        int lenB = b.length();
+        if(lenA > lenB) {
+            b = StringUtils.leftPad(b, lenA, "0");
+        } else {
+            a = StringUtils.leftPad(a, lenB, "0");
+        }
+        int[] arrC = new int[a.length() + 1];
+        for(int i = a.length()-1; i>=0; i--) {
+            int ai = Integer.parseInt(a.charAt(i) + "" );
+            int bi = Integer.parseInt(b.charAt(i) + "" );
+            int ci = arrC[i+1];
+            int t = ai + bi + ci;
+            arrC[i+1] = t%10;
+            arrC[i] = t/10;
+        }
+        StringBuffer res = new StringBuffer();
+        for(int i = 0; i<arrC.length; i++) {
+            if(i==0 && arrC[i]==0) continue;
+            res.append(arrC[i]);
+        }
+        return res.toString();
+    }
+
+    /**
+     * 给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        List<Integer> list = new ArrayList<>();
+        while (true) {
+            if (head.next != null) {
+                list.add(head.val);
+            } else if (Integer.valueOf(head.val) != null) {
+                list.add(head.val);
+                break;
+            } else {
+                break;
+            }
+            head = head.next;
+        }
+        if(list.size()>=n){
+            list.remove(list.size()-n);
+        }
+        ListNode listNode = null;
+        for (int i = list.size(); i > 0; i--) {
+            if (i == list.size()) {
+                listNode = new ListNode(list.get(i-1));
+            } else {
+                listNode = new ListNode(list.get(i-1), listNode);
+            }
+        }
+        return listNode;
+    }
 }
