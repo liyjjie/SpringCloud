@@ -2,6 +2,7 @@ package com.jack.service.Impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
@@ -32,6 +33,10 @@ public class HappyNewYear implements ApplicationRunner {
     private static final Logger logger = LoggerFactory.getLogger(HappyNewYear.class);
 
     private static final String yyyyMMdd = "yyyy-MM-dd";
+
+    //获取配置文件的数据
+    @Value("${redis.order.host}")
+    private String ymlHost;
 
     //线程安全时间类型
     public static LocalDate getLocalDateFromDate(Date date) {
