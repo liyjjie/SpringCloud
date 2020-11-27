@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.log.LogInputStream;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -305,5 +306,94 @@ public class EsServiceImpl implements EsService {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
         return dp[n];
+    }
+
+    /**
+     * 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
+     * 最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
+     * 你可以假设除了整数 0 之外，这个整数不会以零开头。
+     * 示例 1：
+     * 输入：digits = [1,2,3]
+     * 输出：[1,2,4]
+     * 解释：输入数组表示数字 123。
+     * 示例 2：
+     * 输入：digits = [4,3,2,1]
+     * 输出：[4,3,2,2]
+     * 解释：输入数组表示数字 4321。
+     * 示例 3：
+     * 输入：digits = [0]
+     * 输出：[1]
+     * 输入带9的数据时 向前一位进一
+     * @param digits
+     * @return
+     */
+    public static int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1; i >= 0; i--) {
+            digits[i]++;
+            digits[i] = digits[i] % 10;
+            if (digits[i] != 0) return digits;
+        }
+        digits = new int[digits.length + 1];
+        digits[0] = 1;
+        return digits;
+    }
+
+    /**
+     * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+     * 示例 1:
+     * 输入: 123
+     * 输出: 321
+     *  示例 2:
+     * 输入: -123
+     * 输出: -321
+     * 示例 3:
+     * 输入: 120
+     * 输出: 21
+     * 注意:
+     * 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
+     * @param x
+     * @return
+     */
+    public static int reverse(int x) {
+        int y = 0;
+        while (x != 0) {
+            if (y > 214748364 || y < -214748364) {
+                return 0;
+            }
+            y = y * 10 + x % 10;
+            x = x / 10;
+        }
+        return y;
+    }
+    /**
+     * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+     * 你可以假设数组中无重复元素。
+     * 示例 1:
+     * 输入: [1,3,5,6], 5
+     * 输出: 2
+     * 示例 2:
+     * 输入: [1,3,5,6], 2
+     * 输出: 1
+     * 示例 3:
+     * 输入: [1,3,5,6], 7
+     * 输出: 4
+     * 示例 4:
+     * 输入: [1,3,5,6], 0
+     * 输出: 0
+     * 使用二分法 进行计算
+     */
+   public static int searchInsert(int[] nums,int target){
+        int left = 0, right = nums.length - 1;
+        while(left <= right) {
+            int mid = (left + right) / 2;
+            if(nums[mid] == target) {
+                return mid;
+            } else if(nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
     }
 }
