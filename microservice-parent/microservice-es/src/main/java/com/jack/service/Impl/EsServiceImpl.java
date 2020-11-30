@@ -250,11 +250,8 @@ public class EsServiceImpl implements EsService {
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         List<Integer> list = new ArrayList<>();
         while (true) {
-            if (head.next != null) {
+            if (head != null) {
                 list.add(head.val);
-            } else if (Integer.valueOf(head.val) != null) {
-                list.add(head.val);
-                break;
             } else {
                 break;
             }
