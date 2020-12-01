@@ -374,6 +374,7 @@ public class EsServiceImpl implements EsService {
      * 示例 4:
      * 输入: [1,3,5,6], 0
      * 输出: 0
+     * 数组必须是升序排列 否则返回的数据会有问题
      * 使用二分法 进行计算
      */
    public static int searchInsert(int[] nums,int target){
