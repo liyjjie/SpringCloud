@@ -157,7 +157,7 @@ public class EsServiceImpl implements EsService {
 //            }
         } catch (Exception e) {
             //logger 方便记录数据
-            logger.error(String.format("调用红包迁移服务异常,旧 userid：%s,新 userid：%s,res：%s", 123, "dasdasd", "dsafasfsafw"));
+            logger.error(String.format("json转换异常,json：%s,vo：%s,res：%s", json, test.toString(), "异常错误"));
         }
     }
 
@@ -461,7 +461,6 @@ public class EsServiceImpl implements EsService {
      * 给定 nums = [2, 7, 11, 15], target = 9
      * 因为 nums[0] + nums[1] = 2 + 7 = 9
      * 所以返回 [0, 1]
-     *
      */
     public static int[] twoSum(int[] nums, int target) {
         Integer[] integers = Arrays.stream(nums).boxed().toArray(Integer[]::new);
