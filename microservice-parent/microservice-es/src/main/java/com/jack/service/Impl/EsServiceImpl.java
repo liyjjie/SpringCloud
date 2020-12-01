@@ -11,20 +11,17 @@ import com.jack.service.EsService;
 import com.jack.utils.HibernateUtils;
 import com.jack.utils.hibernate.DataSource;
 import com.jack.utils.jwt.JSONUtils;
-import com.jack.vo.EsInsertReturn;
-import com.jack.vo.EsInsertVo;
-import com.jack.vo.EsUpdateVo;
-import com.jack.vo.UserVo;
+import com.jack.vo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.rmi.log.LogInputStream;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -160,7 +157,7 @@ public class EsServiceImpl implements EsService {
 //            }
         } catch (Exception e) {
             //logger 方便记录数据
-            logger.error(String.format("日志打印,旧 userid：%s,新 userid：%s,res：%s", 123, "dasdasd", "dsafasfsafw"));
+            logger.error(String.format("json转换异常,json：%s,vo：%s,res：%s", json, test.toString(), "异常错误"));
         }
     }
 
@@ -193,6 +190,7 @@ public class EsServiceImpl implements EsService {
      * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
      * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
      * 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+     *
      * @param l1
      * @param l2
      * @return
@@ -214,7 +212,8 @@ public class EsServiceImpl implements EsService {
     }
 
     /**
-     *无法转成数值类型的数据进行相加utils(如"1000000000000000000000000000001"与"234")
+     * 无法转成数值类型的数据进行相加utils(如"1000000000000000000000000000001"与"234")
+     *
      * @param a
      * @param b
      * @return
@@ -222,23 +221,23 @@ public class EsServiceImpl implements EsService {
     public static String bigNumberPlus(String a, String b) {
         int lenA = a.length();
         int lenB = b.length();
-        if(lenA > lenB) {
+        if (lenA > lenB) {
             b = StringUtils.leftPad(b, lenA, "0");
         } else {
             a = StringUtils.leftPad(a, lenB, "0");
         }
         int[] arrC = new int[a.length() + 1];
-        for(int i = a.length()-1; i>=0; i--) {
-            int ai = Integer.parseInt(a.charAt(i) + "" );
-            int bi = Integer.parseInt(b.charAt(i) + "" );
-            int ci = arrC[i+1];
+        for (int i = a.length() - 1; i >= 0; i--) {
+            int ai = Integer.parseInt(a.charAt(i) + "");
+            int bi = Integer.parseInt(b.charAt(i) + "");
+            int ci = arrC[i + 1];
             int t = ai + bi + ci;
-            arrC[i+1] = t%10;
-            arrC[i] = t/10;
+            arrC[i + 1] = t % 10;
+            arrC[i] = t / 10;
         }
         StringBuffer res = new StringBuffer();
-        for(int i = 0; i<arrC.length; i++) {
-            if(i==0 && arrC[i]==0) continue;
+        for (int i = 0; i < arrC.length; i++) {
+            if (i == 0 && arrC[i] == 0) continue;
             res.append(arrC[i]);
         }
         return res.toString();
@@ -250,25 +249,22 @@ public class EsServiceImpl implements EsService {
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         List<Integer> list = new ArrayList<>();
         while (true) {
-            if (head.next != null) {
+            if (head != null) {
                 list.add(head.val);
-            } else if (Integer.valueOf(head.val) != null) {
-                list.add(head.val);
-                break;
             } else {
                 break;
             }
             head = head.next;
         }
-        if(list.size()>=n){
-            list.remove(list.size()-n);
+        if (list.size() >= n) {
+            list.remove(list.size() - n);
         }
         ListNode listNode = null;
         for (int i = list.size(); i > 0; i--) {
             if (i == list.size()) {
-                listNode = new ListNode(list.get(i-1));
+                listNode = new ListNode(list.get(i - 1));
             } else {
-                listNode = new ListNode(list.get(i-1), listNode);
+                listNode = new ListNode(list.get(i - 1), listNode);
             }
         }
         return listNode;
@@ -276,20 +272,20 @@ public class EsServiceImpl implements EsService {
 
     /**
      * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
-     *
+     * <p>
      * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
-     *
+     * <p>
      * 注意：给定 n 是一个正整数。
-     *
+     * <p>
      * 示例 1：
-     *
+     * <p>
      * 输入： 2
      * 输出： 2
      * 解释： 有两种方法可以爬到楼顶。
      * 1.  1 阶 + 1 阶
      * 2.  2 阶
      * 示例 2：
-     *
+     * <p>
      * 输入： 3
      * 输出： 3
      * 解释： 有三种方法可以爬到楼顶。
@@ -302,7 +298,7 @@ public class EsServiceImpl implements EsService {
         int[] dp = new int[n + 1];
         dp[0] = 1;
         dp[1] = 1;
-        for(int i = 2; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
         return dp[n];
@@ -324,6 +320,7 @@ public class EsServiceImpl implements EsService {
      * 输入：digits = [0]
      * 输出：[1]
      * 输入带9的数据时 向前一位进一
+     *
      * @param digits
      * @return
      */
@@ -351,6 +348,7 @@ public class EsServiceImpl implements EsService {
      * 输出: 21
      * 注意:
      * 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
+     *
      * @param x
      * @return
      */
@@ -365,6 +363,7 @@ public class EsServiceImpl implements EsService {
         }
         return y;
     }
+
     /**
      * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
      * 你可以假设数组中无重复元素。
@@ -380,15 +379,16 @@ public class EsServiceImpl implements EsService {
      * 示例 4:
      * 输入: [1,3,5,6], 0
      * 输出: 0
+     * 数组必须是升序排列 否则返回的数据会有问题
      * 使用二分法 进行计算
      */
-   public static int searchInsert(int[] nums,int target){
+    public static int searchInsert(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
-        while(left <= right) {
+        while (left <= right) {
             int mid = (left + right) / 2;
-            if(nums[mid] == target) {
+            if (nums[mid] == target) {
                 return mid;
-            } else if(nums[mid] < target) {
+            } else if (nums[mid] < target) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
@@ -405,9 +405,9 @@ public class EsServiceImpl implements EsService {
      * 输出：[1,1,2,3,4,4,5,6]
      * 解释：链表数组如下：
      * [
-     *   1->4->5,
-     *   1->3->4,
-     *   2->6
+     * 1->4->5,
+     * 1->3->4,
+     * 2->6
      * ]
      * 将它们合并到一个有序链表中得到。
      * 1->1->2->3->4->4->5->6
@@ -426,24 +426,116 @@ public class EsServiceImpl implements EsService {
      * lists[i].length 的总和不超过 10^4
      */
     public static ListNode mergeKLists(ListNode[] lists) {
-        List<Integer> list=new ArrayList<>();
-        for (ListNode temp: lists) {
-            while(true){
-                if(temp!=null){
-                   list.add(temp.val);
-                }else{
+        List<Integer> list = new ArrayList<>();
+        for (ListNode temp : lists) {
+            while (true) {
+                if (temp != null) {
+                    list.add(temp.val);
+                } else {
                     break;
                 }
-                temp=temp.next;
+                temp = temp.next;
             }
         }
         Collections.sort(list);
-        ListNode listNode=null;
-        for(int i=list.size()-1;i>=0;i--){
-            if(i==list.size()-1){
-                listNode=new ListNode(list.get(i));
-            }else{
-                listNode=new ListNode(list.get(i),listNode);
+        ListNode listNode = null;
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (i == list.size() - 1) {
+                listNode = new ListNode(list.get(i));
+            } else {
+                listNode = new ListNode(list.get(i), listNode);
+            }
+        }
+        return listNode;
+    }
+
+    /**
+     * 对map的value值进行排序 key与value一一对应 只对value进行排序  map中类型可以切换
+     */
+    public Map<Integer, Integer> mapSorted(Map<Integer, Integer> map) {
+        Map<Integer, Integer> result = new LinkedHashMap<>();
+        Stream<Map.Entry<Integer, Integer>> st = map.entrySet().stream();
+        st.sorted(Comparator.comparing(e -> e.getValue())).forEach(e -> result.put(e.getKey(), e.getValue()));
+        return result;
+    }
+
+    /**
+     * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+     * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+     * 示例:
+     * 给定 nums = [2, 7, 11, 15], target = 9
+     * 因为 nums[0] + nums[1] = 2 + 7 = 9
+     * 所以返回 [0, 1]
+     */
+    public static int[] twoSum(int[] nums, int target) {
+        Integer[] integers = Arrays.stream(nums).boxed().toArray(Integer[]::new);
+        int[] result = new int[2];
+        List<Integer> list = new ArrayList<Integer>(Arrays.asList(integers));
+        for (int i = 0; i <= integers.length - 1; i++) {
+            if (list.contains(target - integers[i])) {
+                result[0] = i;
+                for (int j = 0; j <= integers.length - 1; j++) {
+                    if ((Integer.valueOf(target - integers[i]).toString()).equals(Integer.valueOf(integers[j]).toString())) {
+                        if (j == i) {
+                            continue;
+                        }
+                        result[1] = j;
+                        return result;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+     * 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+     * 示例 1：
+     * 输入：head = [1,2,3,4]
+     * 输出：[2,1,4,3]
+     * 示例 2：
+     * 输入：head = []
+     * 输出：[]
+     * 示例 3：
+     * 输入：head = [1]
+     * 输出：[1]
+     */
+    public static ListNode swapPairs(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        List<Integer> resultList = new ArrayList<>();
+        while (true) {
+            if (head != null) {
+                list.add(head.val);
+            } else {
+                break;
+            }
+            head = head.next;
+        }
+        if (list.size() % 2 == 0) {
+            for (int i = 0; i <= list.size() - 1; i++) {
+                if (i % 2 == 0) {
+                    resultList.add(i, list.get(i + 1));
+                } else {
+                    resultList.add(i, list.get(i - 1));
+                }
+            }
+        } else {
+            for (int i = 0; i <= list.size() - 2; i++) {
+                if (i % 2 == 0) {
+                    resultList.add(i, list.get(i + 1));
+                } else {
+                    resultList.add(i, list.get(i - 1));
+                }
+            }
+            resultList.add(list.get(list.size() - 1));
+        }
+        ListNode listNode = null;
+        for (int i = resultList.size() - 1; i >= 0; i--) {
+            if (i == resultList.size() - 1) {
+                listNode = new ListNode(resultList.get(i));
+            } else {
+                listNode = new ListNode(resultList.get(i), listNode);
             }
         }
         return listNode;
