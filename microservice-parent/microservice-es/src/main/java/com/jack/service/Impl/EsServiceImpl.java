@@ -22,6 +22,7 @@ import sun.rmi.log.LogInputStream;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -441,5 +442,45 @@ public class EsServiceImpl implements EsService {
             }
         }
         return listNode;
+    }
+
+    /**
+     * 对map的value值进行排序 key与value一一对应 只对value进行排序  map中类型可以切换
+     */
+    public Map<Integer,Integer> mapSorted(Map<Integer,Integer> map){
+        Map<Integer,Integer> result=new LinkedHashMap<>();
+        Stream<Map.Entry<Integer, Integer>> st = map.entrySet().stream();
+        st.sorted(Comparator.comparing(e -> e.getValue())).forEach(e -> result.put(e.getKey(), e.getValue()));
+        return result;
+    }
+
+    /**
+     * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+     * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+     * 示例:
+     * 给定 nums = [2, 7, 11, 15], target = 9
+     * 因为 nums[0] + nums[1] = 2 + 7 = 9
+     * 所以返回 [0, 1]
+     *
+     */
+    public static int[] twoSum(int[] nums, int target) {
+        Integer[] integers = Arrays.stream(nums).boxed().toArray(Integer[]::new);
+        int[] result = new int[2];
+        List<Integer> list = new ArrayList<Integer>(Arrays.asList(integers));
+        for (int i = 0; i <= integers.length - 1; i++) {
+            if (list.contains(target - integers[i])) {
+                result[0] = i;
+                for (int j = 0; j <= integers.length - 1; j++) {
+                    if ((Integer.valueOf(target - integers[i]).toString()).equals(Integer.valueOf(integers[j]).toString())) {
+                        if(j==i){
+                          continue;
+                        }
+                        result[1] = j;
+                        return result;
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
