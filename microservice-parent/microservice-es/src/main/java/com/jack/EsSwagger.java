@@ -35,10 +35,10 @@ public class EsSwagger {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("ESswagger")
-                .description("ESswagger")
+                .title("swagger")
+                .description("swagger")
                 .termsOfServiceUrl("http://xxxx.xxxx.com/")
-                .contact("liyongjie")
+                .contact("jack")
                 .version("1.0")
                 .build();
     }

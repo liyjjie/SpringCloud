@@ -48,7 +48,7 @@ public class EsServiceImpl implements EsService {
 
     @Override
     @Transactional
-    @DataSource(readOnly = true)
+    @DataSource(readOnly = true)//注解来判断读那个数据库
     public User userById(Long id) {
         User user = esDao.userByid(id);
         return user;

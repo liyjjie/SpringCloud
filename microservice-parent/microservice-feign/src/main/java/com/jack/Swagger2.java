@@ -31,10 +31,10 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("测试swagger网页")
-                .description("测试swagger网页")
+                .title("swagger")
+                .description("swagger")
                 .termsOfServiceUrl("http://xxxx.xxxx.com/")
-                .contact("liyongjie")
+                .contact("jack")
                 .version("1.0")
                 .build();
     }

@@ -35,7 +35,7 @@ public class Swagger {
                 .title("Swagger API")
                 .description("swagger")
                 .termsOfServiceUrl("")
-                .contact("liyongjie")
+                .contact("jack")
                 .version("1.0.0")
                 .build();
     }
