@@ -27,6 +27,21 @@ logging:
   level:
     com.example.demo.mapper: debug
 
+redis:
+  order:
+    host: 114.55.130.145  #地址
+    port: 6379         #端口号
+    password: tst_test #密码
+    dbIndex: 12     #库
+    timeOut: 2000
+    pool:
+      maxActive: 100
+      maxIdle: 50
+      minIdle: 5
+      maxWait: 2000
+      testOnBorrow: true
+  keys: order
+
 eureka:
   client:
     service-url:

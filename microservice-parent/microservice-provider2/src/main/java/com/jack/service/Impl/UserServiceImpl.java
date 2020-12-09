@@ -8,9 +8,11 @@ import com.jack.vo.AdressEndUserVo;
 import com.jack.vo.OrderVo;
 import com.jack.vo.PasswordVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordDao passwordDao;
+
+    @Autowired
+    private RedisTemplate<Object,Object> redisTemplate;
 
     @Override
     public Boolean addUser(User user) {

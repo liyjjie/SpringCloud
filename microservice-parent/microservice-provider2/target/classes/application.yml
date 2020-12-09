@@ -14,7 +14,7 @@ spring:
   datasource:
     driver-class-name: org.gjt.mm.mysql.Driver                # mysql驱动包
     type: com.alibaba.druid.pool.DruidDataSource              # 当前数据源操作类型
-    url: "jdbc:mysql://localhost:3306/custom"                    # 数据库名称
+    url: "jdbc:mysql://localhost:3306/custom?useUnicode=true&characterEncoding=utf-8&useSSL=false"  # 数据库名称不允许 在连接数据库时放开对ssl的要求
     username: root
     password: root
     dbcp2:
@@ -23,11 +23,30 @@ spring:
       max-wait-millis: 200                                    # 等待连接获取的最大超时时间
       min-idle: 5                                             # 数据库连接池的最小维持连接数
 
+logging:
+  level:
+    com.example.demo.mapper: debug
+
+redis:
+  order:
+    host: 114.55.130.145  #地址
+    port: 6379         #端口号
+    password: tst_test #密码
+    dbIndex: 12     #库
+    timeOut: 2000
+    pool:
+      maxActive: 100
+      maxIdle: 50
+      minIdle: 5
+      maxWait: 2000
+      testOnBorrow: true
+  keys: order
+
 eureka:
   client:
     service-url:
       #defaultZone: http://localhost:9001/eureka
-      defaultZone: http://eureka9001.com:9001/eureka/,http://eureka9002.com:9002/eureka/,http://eureka9003.com:9003/eureka/
+      defaultZone: http://eureka9003.com:9003/eureka/
   instance:
     instance-id: microservice-provider8003               #自定义服务名称信息
     prefer-ip-address: true                                   #访问路径可以显示IP地址

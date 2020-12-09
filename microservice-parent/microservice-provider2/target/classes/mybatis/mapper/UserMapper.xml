@@ -1,17 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.dao.UserDao">
+    <!--一对多查询-->
+    <resultMap id="resultPostMap" type="com.jack.vo.AdressEndUserVo">
+        <result property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="addressName" column="address_name"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <association property="userVos" javaType="com.jack.vo.UserVo">
+            <id property="id" column="user_id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </association>
+    </resultMap>
+
+    <!--一对一查询-->
+    <resultMap id="resultMap" type="com.jack.vo.OrderVo">
+        <result property="id" column="id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="address" column="address"/>
+        <result property="sync" column="sync"/>
+        <collection property="goodDetails" ofType="com.jack.vo.GoodDetail">
+            <result property="id" column="order_id"/>
+            <result property="skuCode" column="sku_code"/>
+            <result property="qty" column="qty"/>
+        </collection>
+    </resultMap>
 
     <select id="getUser" resultType="User" parameterType="int">
-        select * from user where ID=#{id}
+        select * from t_user where ID=#{id}
     </select>
 
     <select id="getUsers" resultType="User">
-    	select * from user
+    	select * from t_user
     </select>
 
-    <insert id="addUser" parameterType="User">
-    	insert into user(NAME, AGE) values(#{name}, #{age})
+    <!--解决重复的问题 在存在的数据根据唯一标识进行修改-->
+    <update id="addUser" parameterType="User">
+    	insert into t_user(id,name, age) values(#{id}, #{name}, #{age})
+    	ON DUPLICATE KEY UPDATE
+    	name = values(name),age= values(age)
+    </update>
+
+    <select id="getAll" resultMap="resultPostMap" parameterType="int">
+        select a.*,u.* from t_address a,t_user u where a.user_id=u.id;
+    </select>
+
+    <select id="getOrderAll" resultMap="resultMap" parameterType="int">
+        select * from t_order o,t_good_detail g where o.id=g.order_id;
+    </select>
+
+    <insert id="insertDemo" parameterType="com.jack.vo.OrderVo">
+        insert into t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="sync != null">
+                sync,
+            </if>
+            <if test="orderCode !=null">
+                order_code,
+            </if>
+        </trim>values
+
+        <if test="goodDetails != null and goodDetails.size>0">
+        insert into t_good_detail (id,sku_code,order_id,qty) values
+        <foreach collection="goodDetails" item="item" index="index" separator=",">
+        (#{item.id},#{item.skuCode},#{id},#{item.qty})
+        </foreach>
+        </if>
+    </insert>
+
+    <!--  begin;-->
+    <!--         delete from `t_order` where `id` = 1 ;-->
+
+
+
+    <insert id="userInsert">
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="skuCode != null">
+                #{sku_code},
+            </if>
+            <if test="qty != null">
+                #{qty},
+            </if>
+        </trim>;
     </insert>
 
 </mapper>
