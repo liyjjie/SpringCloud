@@ -35,13 +35,13 @@ public class EsController {
     @Autowired
     private EsService esService;
 
-    //execl导入数据utils
+    //execl导入数据utils true代表允许为空  false不允许为空
     @ApiOperation(value = "数据导入")
     @PostMapping("/demo")
     public void demo(@ApiParam(value = "excel数据文件()", required = true) MultipartFile file) throws Exception {
         List<ExcelImportParam> list = new ArrayList<>(2);
-        list.add(new ExcelImportParam(0, "name", true, "", "", "", ExcelImportParam.VALIDATE_TYPE_DEFAULT));
-        list.add(new ExcelImportParam(1, "age", true, "", "", "", ExcelImportParam.VALIDATE_TYPE_DEFAULT));
+        list.add(new ExcelImportParam(0, "name", false, "", "", "", ExcelImportParam.VALIDATE_TYPE_DEFAULT));
+        list.add(new ExcelImportParam(1, "age", false, "", "", "", ExcelImportParam.VALIDATE_TYPE_DEFAULT));
         List<ResultVo> vos = ExcelImportUtils.doExcelImport(ResultVo.class, list, file, 0);
         for (ResultVo temp : vos) {
             System.out.println(temp);

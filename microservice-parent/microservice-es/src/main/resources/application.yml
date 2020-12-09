@@ -3,6 +3,7 @@ server:
 
 #尽量遵守 使用注解@DataSource 默认为false(默认走主库master写操作) 为true时走从库slave(读操作)
 #但要确保主库和从库的数据一致 防止修改主库 但从库数据未同步的问题
+#LocalDateUtils 线程安全的时间格式
 spring:
   datasource:
     initialize: false
