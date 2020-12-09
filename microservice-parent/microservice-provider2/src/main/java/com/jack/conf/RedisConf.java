@@ -66,7 +66,9 @@ public class RedisConf {
         poolConfig.setTestOnBorrow(true);
         poolConfig.setTestOnReturn(false);
         poolConfig.setTestWhileIdle(true);
-
+/**
+ * 添加以下方法时 要导入jar包 但目前导入的版本与spring boot 1.x版本冲突
+ */
 //        JedisClientConfiguration clientConfig = JedisClientConfiguration.builder()
 //                .usePooling().poolConfig(poolConfig).and().readTimeout(Duration.ofMillis(redisTimeout)).build();
 
