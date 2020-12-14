@@ -8,12 +8,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,6 +37,7 @@ public class HappyNewYear implements ApplicationRunner {
     private String ymlHost;
 
     //线程安全时间类型
+    //ZoneId.systemDefault() 获取当前地区的时区
     public static LocalDate getLocalDateFromDate(Date date) {
         return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
     }

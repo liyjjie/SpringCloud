@@ -74,6 +74,7 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--swagger 2.7.0 与swagger 2.8.0是有区别的 2.7.0 在请求字段中有is开头的时候不会显示此字段 2.8.0不会出现这样的情况-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
