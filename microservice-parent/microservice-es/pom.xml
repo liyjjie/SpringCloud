@@ -131,6 +131,12 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <!--redis 导入-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!--程序在意外终止 导致服务无法启动 导入一下jar包-->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
