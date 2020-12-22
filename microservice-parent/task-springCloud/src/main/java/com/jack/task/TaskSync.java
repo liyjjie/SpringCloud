@@ -30,6 +30,7 @@ public class TaskSync implements DisposableBean,Runnable {
         System.out.println(user);
     }
 
+    //在服务关闭时会自动调用此方法
     @Override
     public void destroy() throws Exception {
         logger.info("服务已释放");
